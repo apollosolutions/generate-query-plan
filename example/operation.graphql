@@ -1,0 +1,14 @@
+query getHomePageDetail {
+  games {
+    result
+  }
+  players {
+    name
+    rating
+    title
+  }
+  tournaments {
+    name
+    winnerName
+  }
+}

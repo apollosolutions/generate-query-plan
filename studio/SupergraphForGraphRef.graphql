@@ -1,0 +1,19 @@
+query SupergraphForGraphRef($ref: ID!) {
+  variant(ref: $ref) {
+    ... on GraphVariant {
+      __typename
+      latestApprovedLaunch {
+        build {
+          result {
+            __typename
+            ... on BuildSuccess {
+              coreSchema {
+                coreDocument
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

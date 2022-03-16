@@ -1,0 +1,163 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.1")
+  @core(feature: "https://specs.apollo.dev/join/v0.1")
+  @apollo_studio_metadata(
+    launchId: "539941fc-5bc8-4f06-8d52-f952e9a2e255"
+    buildId: "539941fc-5bc8-4f06-8d52-f952e9a2e255"
+    checkId: null
+  ) {
+  query: Query
+}
+
+directive @core(feature: String!) repeatable on SCHEMA
+
+directive @join__field(
+  graph: join__Graph
+  requires: join__FieldSet
+  provides: join__FieldSet
+) on FIELD_DEFINITION
+
+directive @join__type(
+  graph: join__Graph!
+  key: join__FieldSet
+) repeatable on OBJECT | INTERFACE
+
+directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+"""
+A chess game between two chess players
+"""
+type Game
+  @join__owner(graph: GAMES)
+  @join__type(graph: GAMES, key: "whitePlayerName")
+  @join__type(graph: GAMES, key: "blackPlayerName") {
+  """
+  The chess player with the white pieces
+  """
+  whitePlayerName: String! @join__field(graph: GAMES)
+  """
+  The chess player with the black pieces
+  """
+  blackPlayerName: String! @join__field(graph: GAMES)
+  """
+  The date the chess game was played
+  """
+  date: String! @join__field(graph: GAMES)
+  """
+  The result of the chess game
+  """
+  result: String! @join__field(graph: GAMES)
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  GAMES
+    @join__graph(
+      name: "games"
+      url: "https://games-dot-adebisi-presales-demo.uc.r.appspot.com"
+    )
+  PLAYERS
+    @join__graph(
+      name: "players"
+      url: "https://players-dot-adebisi-presales-demo.uc.r.appspot.com/"
+    )
+  TOURNAMENTS
+    @join__graph(
+      name: "tournaments"
+      url: "https://tournaments-dot-adebisi-presales-demo.uc.r.appspot.com"
+    )
+}
+
+"""
+A chess player.
+"""
+type Player
+  @join__owner(graph: PLAYERS)
+  @join__type(graph: PLAYERS, key: "name")
+  @join__type(graph: TOURNAMENTS, key: "name")
+  @join__type(graph: GAMES, key: "name") {
+  """
+  The name of the chess player
+  """
+  name: String! @join__field(graph: PLAYERS)
+  """
+  The year the player was born
+  """
+  yearBorn: String! @join__field(graph: PLAYERS)
+  """
+  The country the player represents
+  """
+  country: String! @join__field(graph: PLAYERS)
+  """
+  The chess title of the player
+  """
+  title: String! @join__field(graph: PLAYERS)
+  """
+  The rating of the player
+  """
+  rating: Int @join__field(graph: PLAYERS)
+  """
+  A short biography of the player
+  """
+  biography: String @join__field(graph: PLAYERS)
+  """
+  Tournaments by a Player
+  """
+  tournaments: [Tournament] @join__field(graph: TOURNAMENTS)
+  """
+  Games by a Player
+  """
+  games: [Game] @join__field(graph: GAMES)
+}
+
+type Query {
+  """
+  Get a list of tournaments
+  """
+  tournaments: [Tournament!]! @join__field(graph: TOURNAMENTS)
+  """
+  Get a list of players
+  """
+  players: [Player!]! @join__field(graph: PLAYERS)
+  """
+  Get a list of games
+  """
+  games: [Game!]! @join__field(graph: GAMES)
+}
+
+"""
+A chess tournament, played by chess players
+"""
+type Tournament {
+  """
+  The name of the chess tournament
+  """
+  name: String!
+  """
+  The number of players in the chess tournament
+  """
+  numberOfPlayers: Int!
+  """
+  The number of games in the chess tournament
+  """
+  numberOfGames: Int!
+  winnerName: String!
+    @deprecated(reason: "Use championName for all new clients.")
+  """
+  The champion of the chesss tournament
+  """
+  championName: String!
+  """
+  The players in the chess tournament
+  """
+  players: [String!]!
+}
+
+directive @apollo_studio_metadata(
+  launchId: String
+  buildId: String
+  checkId: String
+) on SCHEMA
