@@ -7,8 +7,18 @@ Command line utility for generating an Apollo Federation query plan
 ## Usage
 
 ```sh
-npx github:@apollosolutions/generate-query-plan --supergraph supergraph.graphql --operation operation.graphql
+npx github:@apollosolutions/generate-query-plan \
+  --supergraph supergraph.graphql \
+  --operation operation.graphql
+
 # or
+
 export APOLLO_KEY="your api key"
-npx github:@apollosolutions/generate-query-plan --graphref supergraph.graphql --operation operation.graphql
+npx github:@apollosolutions/generate-query-plan \
+  --graphref supergraph.graphql \
+  --operation operation.graphql
 ```
+
+### Federation 1
+
+Use `npx github:@apollosolutions/generate-query-plan#version-0.x` to use the query planner in `@apollo/gateway@0.x`.

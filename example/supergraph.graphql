@@ -1,163 +1,154 @@
 schema
-  @core(feature: "https://specs.apollo.dev/core/v0.1")
-  @core(feature: "https://specs.apollo.dev/join/v0.1")
-  @apollo_studio_metadata(
-    launchId: "539941fc-5bc8-4f06-8d52-f952e9a2e255"
-    buildId: "539941fc-5bc8-4f06-8d52-f952e9a2e255"
-    checkId: null
-  ) {
+  @core(feature: "https://specs.apollo.dev/core/v0.2")
+  @core(feature: "https://specs.apollo.dev/join/v0.2", for: EXECUTION)
+  @core(feature: "https://specs.apollo.dev/tag/v0.1") {
   query: Query
 }
 
-directive @core(feature: String!) repeatable on SCHEMA
+directive @core(
+  feature: String!
+  as: String
+  for: core__Purpose
+) repeatable on SCHEMA
 
 directive @join__field(
-  graph: join__Graph
+  graph: join__Graph!
   requires: join__FieldSet
   provides: join__FieldSet
-) on FIELD_DEFINITION
+  type: String
+  external: Boolean
+) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__implements(
+  graph: join__Graph!
+  interface: String!
+) repeatable on OBJECT | INTERFACE
 
 directive @join__type(
   graph: join__Graph!
   key: join__FieldSet
-) repeatable on OBJECT | INTERFACE
+  extension: Boolean! = false
+  resolvable: Boolean! = true
+) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
 
-directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
+directive @tag(
+  name: String!
+) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
 
-directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+enum CacheControlScope @join__type(graph: CHARACTERS) {
+  PUBLIC
+  PRIVATE
+}
 
-"""
-A chess game between two chess players
-"""
-type Game
-  @join__owner(graph: GAMES)
-  @join__type(graph: GAMES, key: "whitePlayerName")
-  @join__type(graph: GAMES, key: "blackPlayerName") {
+type Character
+  @join__type(graph: CHARACTERS, key: "id")
+  @join__type(graph: EPISODES, key: "id") {
+  id: ID
+  name: String @tag(name: "pii") @join__field(graph: CHARACTERS)
+  status: String @join__field(graph: CHARACTERS)
+  species: String @join__field(graph: CHARACTERS)
+  type: String @join__field(graph: CHARACTERS)
+  gender: String @join__field(graph: CHARACTERS)
+  origin: Location @join__field(graph: CHARACTERS)
+  location: Location @join__field(graph: CHARACTERS)
+  image: String @join__field(graph: CHARACTERS)
+  created: String @join__field(graph: CHARACTERS)
+  episode: [Episode]! @join__field(graph: EPISODES)
+}
+
+type Characters @join__type(graph: CHARACTERS) {
+  info: Info
+  results: [Character]
+}
+
+enum core__Purpose {
   """
-  The chess player with the white pieces
+  `SECURITY` features provide metadata necessary to securely resolve fields.
   """
-  whitePlayerName: String! @join__field(graph: GAMES)
+  SECURITY
+
   """
-  The chess player with the black pieces
+  `EXECUTION` features provide metadata necessary for operation execution.
   """
-  blackPlayerName: String! @join__field(graph: GAMES)
-  """
-  The date the chess game was played
-  """
-  date: String! @join__field(graph: GAMES)
-  """
-  The result of the chess game
-  """
-  result: String! @join__field(graph: GAMES)
+  EXECUTION
+}
+
+type Episode @join__type(graph: CHARACTERS) @join__type(graph: EPISODES) {
+  id: ID
+  name: String @join__field(graph: EPISODES)
+  air_date: String @join__field(graph: EPISODES)
+  episode: String @tag(name: "internal") @join__field(graph: EPISODES)
+  characters: [Character]! @join__field(graph: EPISODES)
+  created: String @join__field(graph: EPISODES)
+}
+
+type Episodes @join__type(graph: EPISODES) {
+  info: Info
+  results: [Episode]
+}
+
+input FilterCharacter @join__type(graph: CHARACTERS) {
+  name: String
+  status: String
+  species: String
+  type: String
+  gender: String
+}
+
+input FilterEpisode @join__type(graph: EPISODES) {
+  name: String
+  episode: String
+}
+
+input FilterLocation @join__type(graph: CHARACTERS) {
+  name: String
+  type: String
+  dimension: String
+}
+
+type Info @join__type(graph: CHARACTERS) @join__type(graph: EPISODES) {
+  count: Int
+  pages: Int
+  next: Int
+  prev: Int
 }
 
 scalar join__FieldSet
 
 enum join__Graph {
-  GAMES
-    @join__graph(
-      name: "games"
-      url: "https://games-dot-adebisi-presales-demo.uc.r.appspot.com"
-    )
-  PLAYERS
-    @join__graph(
-      name: "players"
-      url: "https://players-dot-adebisi-presales-demo.uc.r.appspot.com/"
-    )
-  TOURNAMENTS
-    @join__graph(
-      name: "tournaments"
-      url: "https://tournaments-dot-adebisi-presales-demo.uc.r.appspot.com"
-    )
+  CHARACTERS @join__graph(name: "characters", url: "http://localhost:4001")
+  EPISODES @join__graph(name: "episodes", url: "http://localhost:4002")
 }
 
-"""
-A chess player.
-"""
-type Player
-  @join__owner(graph: PLAYERS)
-  @join__type(graph: PLAYERS, key: "name")
-  @join__type(graph: TOURNAMENTS, key: "name")
-  @join__type(graph: GAMES, key: "name") {
-  """
-  The name of the chess player
-  """
-  name: String! @join__field(graph: PLAYERS)
-  """
-  The year the player was born
-  """
-  yearBorn: String! @join__field(graph: PLAYERS)
-  """
-  The country the player represents
-  """
-  country: String! @join__field(graph: PLAYERS)
-  """
-  The chess title of the player
-  """
-  title: String! @join__field(graph: PLAYERS)
-  """
-  The rating of the player
-  """
-  rating: Int @join__field(graph: PLAYERS)
-  """
-  A short biography of the player
-  """
-  biography: String @join__field(graph: PLAYERS)
-  """
-  Tournaments by a Player
-  """
-  tournaments: [Tournament] @join__field(graph: TOURNAMENTS)
-  """
-  Games by a Player
-  """
-  games: [Game] @join__field(graph: GAMES)
+type Location @join__type(graph: CHARACTERS) {
+  id: ID
+  name: String
+  type: String
+  dimension: String
+  residents: [Character]!
+  created: String
 }
 
-type Query {
-  """
-  Get a list of tournaments
-  """
-  tournaments: [Tournament!]! @join__field(graph: TOURNAMENTS)
-  """
-  Get a list of players
-  """
-  players: [Player!]! @join__field(graph: PLAYERS)
-  """
-  Get a list of games
-  """
-  games: [Game!]! @join__field(graph: GAMES)
+type Locations @join__type(graph: CHARACTERS) {
+  info: Info
+  results: [Location]
 }
 
-"""
-A chess tournament, played by chess players
-"""
-type Tournament {
-  """
-  The name of the chess tournament
-  """
-  name: String!
-  """
-  The number of players in the chess tournament
-  """
-  numberOfPlayers: Int!
-  """
-  The number of games in the chess tournament
-  """
-  numberOfGames: Int!
-  winnerName: String!
-    @deprecated(reason: "Use championName for all new clients.")
-  """
-  The champion of the chesss tournament
-  """
-  championName: String!
-  """
-  The players in the chess tournament
-  """
-  players: [String!]!
+type Query @join__type(graph: CHARACTERS) @join__type(graph: EPISODES) {
+  character(id: ID!): Character @join__field(graph: CHARACTERS)
+  characters(page: Int, filter: FilterCharacter): Characters
+    @join__field(graph: CHARACTERS)
+  charactersByIds(ids: [ID!]!): [Character] @join__field(graph: CHARACTERS)
+  location(id: ID!): Location @join__field(graph: CHARACTERS)
+  locations(page: Int, filter: FilterLocation): Locations
+    @join__field(graph: CHARACTERS)
+  locationsByIds(ids: [ID!]!): [Location] @join__field(graph: CHARACTERS)
+  episode(id: ID!): Episode @join__field(graph: EPISODES)
+  episodes(page: Int, filter: FilterEpisode): Episodes
+    @join__field(graph: EPISODES)
+  episodesByIds(ids: [ID!]!): [Episode] @join__field(graph: EPISODES)
 }
 
-directive @apollo_studio_metadata(
-  launchId: String
-  buildId: String
-  checkId: String
-) on SCHEMA
+scalar Upload @join__type(graph: CHARACTERS)

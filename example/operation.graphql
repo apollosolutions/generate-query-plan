@@ -1,14 +1,10 @@
-query getHomePageDetail {
-  games {
-    result
-  }
-  players {
+query ExampleQuery($characterId: ID!) {
+  character(id: $characterId) {
+    id
     name
-    rating
-    title
-  }
-  tournaments {
-    name
-    winnerName
+    episode {
+      id
+      name
+    }
   }
 }

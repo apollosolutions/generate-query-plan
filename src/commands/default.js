@@ -1,5 +1,8 @@
-import { buildOperationContext } from "@apollo/gateway";
-import { buildComposedSchema, QueryPlanner } from "@apollo/query-planner";
+import {
+  operationFromDocument,
+  buildSupergraphSchema,
+} from "@apollo/federation-internals";
+import { QueryPlanner } from "@apollo/query-planner";
 import { Command, Option } from "clipanion";
 import { parse } from "graphql";
 import { readFile } from "fs/promises";
@@ -21,20 +24,20 @@ export class DefaultCommand extends Command {
       process.exit(1);
     }
 
-    const schema = this.supergraph
+    const result = this.supergraph
       ? await fetchSupergraphFromFile(this.supergraph)
       : this.graphref
       ? await fetchSupergraphFromStudio(this.graphref)
       : null;
 
-    if (!schema) {
+    if (!result) {
       this.context.stderr.write("cannot load supergraph");
       process.exit(1);
     }
 
     const operation = await readFile(this.operation, "utf-8");
 
-    const queryPlan = await generateQueryPlan(schema, operation);
+    const queryPlan = await generateQueryPlan(result[0], operation);
 
     this.context.stdout.write(JSON.stringify(queryPlan, null, 2));
     this.context.stdout.write("\n");
@@ -42,28 +45,22 @@ export class DefaultCommand extends Command {
 }
 
 /**
- * @param {import("graphql").GraphQLSchema} schema
+ * @param {import("@apollo/federation-internals").Schema} schema
  * @param {string} operationDoc
  * @param {string} [operationName]
  */
 export async function generateQueryPlan(schema, operationDoc, operationName) {
-  const operationDocument = parse(operationDoc);
-  const operationContext = buildOperationContext({
-    schema,
-    operationDocument,
-    operationName,
-  });
+  const documentNode = parse(operationDoc);
+  const operation = operationFromDocument(schema, documentNode, operationName);
   const queryPlanner = new QueryPlanner(schema);
-  return queryPlanner.buildQueryPlan(operationContext, {
-    autoFragmentization: false,
-  });
+  return queryPlanner.buildQueryPlan(operation);
 }
 
 /**
  * @param {string} file
  */
 async function fetchSupergraphFromFile(file) {
-  return buildComposedSchema(parse(await readFile(file, "utf-8")));
+  return buildSupergraphSchema(await readFile(file, "utf-8"));
 }
 
 /**
@@ -99,9 +96,7 @@ async function fetchSupergraphFromStudio(ref) {
     return null;
   }
 
-  return buildComposedSchema(
-    parse(
-      resp.variant.latestApprovedLaunch.build.result.coreSchema.coreDocument
-    )
+  return buildSupergraphSchema(
+    resp.variant.latestApprovedLaunch.build.result.coreSchema.coreDocument
   );
 }
