@@ -15,7 +15,7 @@ npx github:@apollosolutions/generate-query-plan \
 
 export APOLLO_KEY="your api key"
 npx github:@apollosolutions/generate-query-plan \
-  --graphref supergraph.graphql \
+  --graphref mygraph@current \
   --operation operation.graphql
 ```
 
