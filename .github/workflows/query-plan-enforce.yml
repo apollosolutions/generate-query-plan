@@ -25,8 +25,10 @@ jobs:
             --supergraph example/supergraph.graphql \
             --operation example/operation.graphql | wc -c)
 
+          echo "Query plan is of size: $query_plan_size";
+          
           if [ "$query_plan_size" -gt "$MAX_SIZE" ]; then
-            echo "Query plan is too big";
+            echo "Query plan of size $query_plan_size is greater than the allowed size of $MAX_SIZE";
             exit 1;
           fi
           
