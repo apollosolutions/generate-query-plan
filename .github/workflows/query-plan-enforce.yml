@@ -1,0 +1,34 @@
+name: Example of Enforcing Query Plan Size
+
+# Allows you to run this workflow manually from the Actions tab
+on:
+  workflow_dispatch:
+    inputs:
+      maxSize:
+        description: 'Maximum size of the query plan allowed'
+        required: true
+        default: '1500'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - run: |
+          query_plan_size=$(npx github:@apollosolutions/generate-query-plan \
+            --supergraph example/supergraph.graphql \
+            --operation example/operation.graphql | wc -c)
+
+          if [ "$query_plan_size" -gt "$MAX_SIZE" ]; then
+            echo "Query plan is too big";
+            exit 1;
+          fi
+          
+        env:
+          MAX_SIZE: ${{ github.event.inputs.maxSize }}
