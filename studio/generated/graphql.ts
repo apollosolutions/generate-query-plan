@@ -172,6 +172,66 @@ export type AccountTicketArgs = {
   id: Scalars['ID'];
 };
 
+/** Columns of AccountBillingUsageStats. */
+export enum AccountBillingUsageStatsColumn {
+  OperationCount = 'OPERATION_COUNT',
+  OperationCountProvidedExplicitly = 'OPERATION_COUNT_PROVIDED_EXPLICITLY',
+  SchemaTag = 'SCHEMA_TAG',
+  ServiceId = 'SERVICE_ID',
+  Timestamp = 'TIMESTAMP'
+}
+
+export type AccountBillingUsageStatsDimensions = {
+  __typename?: 'AccountBillingUsageStatsDimensions';
+  operationCountProvidedExplicitly?: Maybe<Scalars['String']>;
+  schemaTag?: Maybe<Scalars['String']>;
+  serviceId?: Maybe<Scalars['ID']>;
+};
+
+/** Filter for data in AccountBillingUsageStats. Fields with dimension names represent equality checks. All fields are implicitly ANDed together. */
+export type AccountBillingUsageStatsFilter = {
+  and?: InputMaybe<Array<AccountBillingUsageStatsFilter>>;
+  in?: InputMaybe<AccountBillingUsageStatsFilterIn>;
+  not?: InputMaybe<AccountBillingUsageStatsFilter>;
+  /** Selects rows whose operationCountProvidedExplicitly dimension equals the given value if not null. To query for the null value, use {in: {operationCountProvidedExplicitly: [null]}} instead. */
+  operationCountProvidedExplicitly?: InputMaybe<Scalars['String']>;
+  or?: InputMaybe<Array<AccountBillingUsageStatsFilter>>;
+  /** Selects rows whose schemaTag dimension equals the given value if not null. To query for the null value, use {in: {schemaTag: [null]}} instead. */
+  schemaTag?: InputMaybe<Scalars['String']>;
+  /** Selects rows whose serviceId dimension equals the given value if not null. To query for the null value, use {in: {serviceId: [null]}} instead. */
+  serviceId?: InputMaybe<Scalars['ID']>;
+};
+
+/** Filter for data in AccountBillingUsageStats. Fields match if the corresponding dimension's value is in the given list. All fields are implicitly ANDed together. */
+export type AccountBillingUsageStatsFilterIn = {
+  /** Selects rows whose operationCountProvidedExplicitly dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  operationCountProvidedExplicitly?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Selects rows whose schemaTag dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  schemaTag?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Selects rows whose serviceId dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  serviceId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type AccountBillingUsageStatsMetrics = {
+  __typename?: 'AccountBillingUsageStatsMetrics';
+  operationCount: Scalars['Long'];
+};
+
+export type AccountBillingUsageStatsOrderBySpec = {
+  column: AccountBillingUsageStatsColumn;
+  direction: Ordering;
+};
+
+export type AccountBillingUsageStatsRecord = {
+  __typename?: 'AccountBillingUsageStatsRecord';
+  /** Dimensions of AccountBillingUsageStats that can be grouped by. */
+  groupBy: AccountBillingUsageStatsDimensions;
+  /** Metrics of AccountBillingUsageStats that can be aggregated over. */
+  metrics: AccountBillingUsageStatsMetrics;
+  /** Starting segment timestamp. */
+  timestamp: Scalars['Timestamp'];
+};
+
 export type AccountChecksStatsMetrics = {
   __typename?: 'AccountChecksStatsMetrics';
   totalFailedChecks: Scalars['Long'];
@@ -369,7 +429,6 @@ export type AccountExperimentalFeatures = {
   __typename?: 'AccountExperimentalFeatures';
   auditLogs: Scalars['Boolean'];
   championDashboard: Scalars['Boolean'];
-  derivedLaunches: Scalars['Boolean'];
   federation2Preview: Scalars['Boolean'];
   preRequestPreview: Scalars['Boolean'];
   publicVariants: Scalars['Boolean'];
@@ -983,6 +1042,7 @@ export enum AccountState {
 /** A time window with a specified granularity over a given account. */
 export type AccountStatsWindow = {
   __typename?: 'AccountStatsWindow';
+  billingUsageStats: Array<AccountBillingUsageStatsRecord>;
   edgeServerInfos: Array<AccountEdgeServerInfosRecord>;
   errorStats: Array<AccountErrorStatsRecord>;
   fieldLatencies: Array<AccountFieldLatenciesRecord>;
@@ -995,6 +1055,14 @@ export type AccountStatsWindow = {
   roundedUpTo: Scalars['Timestamp'];
   tracePathErrorsRefs: Array<AccountTracePathErrorsRefsRecord>;
   traceRefs: Array<AccountTraceRefsRecord>;
+};
+
+
+/** A time window with a specified granularity over a given account. */
+export type AccountStatsWindowBillingUsageStatsArgs = {
+  filter?: InputMaybe<AccountBillingUsageStatsFilter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<AccountBillingUsageStatsOrderBySpec>>;
 };
 
 
@@ -1647,6 +1715,72 @@ export type BillingSubscriptionV2 = {
    */
   trialExpiresAt?: Maybe<Scalars['Timestamp']>;
   uuid: Scalars['ID'];
+};
+
+/** Columns of BillingUsageStats. */
+export enum BillingUsageStatsColumn {
+  AccountId = 'ACCOUNT_ID',
+  OperationCount = 'OPERATION_COUNT',
+  OperationCountProvidedExplicitly = 'OPERATION_COUNT_PROVIDED_EXPLICITLY',
+  SchemaTag = 'SCHEMA_TAG',
+  ServiceId = 'SERVICE_ID',
+  Timestamp = 'TIMESTAMP'
+}
+
+export type BillingUsageStatsDimensions = {
+  __typename?: 'BillingUsageStatsDimensions';
+  accountId?: Maybe<Scalars['ID']>;
+  operationCountProvidedExplicitly?: Maybe<Scalars['String']>;
+  schemaTag?: Maybe<Scalars['String']>;
+  serviceId?: Maybe<Scalars['ID']>;
+};
+
+/** Filter for data in BillingUsageStats. Fields with dimension names represent equality checks. All fields are implicitly ANDed together. */
+export type BillingUsageStatsFilter = {
+  /** Selects rows whose accountId dimension equals the given value if not null. To query for the null value, use {in: {accountId: [null]}} instead. */
+  accountId?: InputMaybe<Scalars['ID']>;
+  and?: InputMaybe<Array<BillingUsageStatsFilter>>;
+  in?: InputMaybe<BillingUsageStatsFilterIn>;
+  not?: InputMaybe<BillingUsageStatsFilter>;
+  /** Selects rows whose operationCountProvidedExplicitly dimension equals the given value if not null. To query for the null value, use {in: {operationCountProvidedExplicitly: [null]}} instead. */
+  operationCountProvidedExplicitly?: InputMaybe<Scalars['String']>;
+  or?: InputMaybe<Array<BillingUsageStatsFilter>>;
+  /** Selects rows whose schemaTag dimension equals the given value if not null. To query for the null value, use {in: {schemaTag: [null]}} instead. */
+  schemaTag?: InputMaybe<Scalars['String']>;
+  /** Selects rows whose serviceId dimension equals the given value if not null. To query for the null value, use {in: {serviceId: [null]}} instead. */
+  serviceId?: InputMaybe<Scalars['ID']>;
+};
+
+/** Filter for data in BillingUsageStats. Fields match if the corresponding dimension's value is in the given list. All fields are implicitly ANDed together. */
+export type BillingUsageStatsFilterIn = {
+  /** Selects rows whose accountId dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  accountId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Selects rows whose operationCountProvidedExplicitly dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  operationCountProvidedExplicitly?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Selects rows whose schemaTag dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  schemaTag?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Selects rows whose serviceId dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  serviceId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type BillingUsageStatsMetrics = {
+  __typename?: 'BillingUsageStatsMetrics';
+  operationCount: Scalars['Long'];
+};
+
+export type BillingUsageStatsOrderBySpec = {
+  column: BillingUsageStatsColumn;
+  direction: Ordering;
+};
+
+export type BillingUsageStatsRecord = {
+  __typename?: 'BillingUsageStatsRecord';
+  /** Dimensions of BillingUsageStats that can be grouped by. */
+  groupBy: BillingUsageStatsDimensions;
+  /** Metrics of BillingUsageStats that can be aggregated over. */
+  metrics: BillingUsageStatsMetrics;
+  /** Starting segment timestamp. */
+  timestamp: Scalars['Timestamp'];
 };
 
 export type Build = {
@@ -3006,13 +3140,18 @@ export type GraphVariant = {
   graph: Service;
   /** Graph ID of the variant. Prefer using graph { id } when feasible. */
   graphId: Scalars['String'];
+  /** If the variant has managed subgraphs. */
+  hasManagedSubgraphs?: Maybe<Scalars['Boolean']>;
   /** Global identifier for the graph variant, in the form `graph@variant`. */
   id: Scalars['ID'];
   /** Represents whether this variant is a Contract. */
   isContract: Scalars['Boolean'];
   /** Is this variant one of the current user's favorite variants? */
   isFavoriteOfCurrentUser: Scalars['Boolean'];
-  /** If the variant has a composition */
+  /**
+   * If the variant has managed subgraphs.
+   * @deprecated Replaced by hasManagedSubgraphs
+   */
   isFederated?: Maybe<Scalars['Boolean']>;
   /** If the variant is protected */
   isProtected: Scalars['Boolean'];
@@ -3021,8 +3160,12 @@ export type GraphVariant = {
   isPubliclyListed: Scalars['Boolean'];
   /** Represents whether Apollo has verified the authenticity of this public variant. This can only be true if the variant is also public. */
   isVerified: Scalars['Boolean'];
+  /** Latest approved launch for the variant, and what is served through Uplink. */
   latestApprovedLaunch?: Maybe<Launch>;
+  /** Latest launch for the variant, whether successful or not. */
   latestLaunch?: Maybe<Launch>;
+  /** Latest publication for the variant. */
+  latestPublication?: Maybe<SchemaTag>;
   launch?: Maybe<Launch>;
   launchHistory: Array<Launch>;
   links?: Maybe<Array<LinkInfo>>;
@@ -3043,6 +3186,11 @@ export type GraphVariant = {
   /** If the graphql endpoint is set up to accept cookies. */
   sendCookies?: Maybe<Scalars['Boolean']>;
   sourceVariant?: Maybe<GraphVariant>;
+  /**
+   * List of subgraphs that comprise a variant, null if not federated.
+   * Set includeDeleted to see deleted subgraphs.
+   */
+  subgraphs?: Maybe<Array<FederatedImplementingService>>;
   /** URL where subscription operations can be executed. */
   subscriptionUrl?: Maybe<Scalars['String']>;
   /** A list of supported directives */
@@ -3099,6 +3247,15 @@ export type GraphVariantRegistryStatsWindowArgs = {
   from: Scalars['Timestamp'];
   resolution?: InputMaybe<Resolution>;
   to?: InputMaybe<Scalars['Timestamp']>;
+};
+
+
+/**
+ * A variant of a graph, often corresponding to an environment where a graph runs (e.g. staging).
+ * See https://www.apollographql.com/docs/studio/org/graphs/ for more details.
+ */
+export type GraphVariantSubgraphsArgs = {
+  includeDeleted?: Scalars['Boolean'];
 };
 
 /** Result of looking up a variant by ref */
@@ -3611,30 +3768,53 @@ export type InvoiceV2 = {
   uuid: Scalars['ID'];
 };
 
+/** A Launch represents the complete process of making a set of updates to your deployed graph. */
 export type Launch = {
   __typename?: 'Launch';
+  /** The time at which this launch was approved. */
   approvedAt?: Maybe<Scalars['Timestamp']>;
+  /** The build for the variant being launched. Is non-null once the build is initiated. */
   build?: Maybe<Build>;
+  /** Set of items that will be passed to the build. */
   buildInput: BuildInput;
+  /** The time at which this launch completed. */
   completedAt?: Maybe<Scalars['Timestamp']>;
+  /** The time at which this launch initiated. */
   createdAt: Scalars['Timestamp'];
+  /** Contract launches that were triggered by this launch. */
   downstreamLaunches: Array<Launch>;
+  /** The ID of the graph that this launch was initiated for. */
   graphId: Scalars['String'];
+  /** The name of the variant that this launch was initiated for. */
   graphVariant: Scalars['String'];
+  /** Unique identifier for this launch. */
   id: Scalars['ID'];
   isAvailable?: Maybe<Scalars['Boolean']>;
+  /** Whether the launch completed. */
   isCompleted?: Maybe<Scalars['Boolean']>;
+  /** Whether the launch was published. */
   isPublished?: Maybe<Scalars['Boolean']>;
   isTarget?: Maybe<Scalars['Boolean']>;
+  /** Returns the most recent launch sequence step. */
   latestSequenceStep?: Maybe<LaunchSequenceStep>;
+  /** A specific publication of a graph variant pertaining to this launch. */
+  publication?: Maybe<SchemaTag>;
+  /** The outcome of the launch. */
   results: Array<LaunchResult>;
   schemaTag?: Maybe<SchemaTag>;
+  /** This represents a sequence in the Launch. Returns a list of sequence steps that represents points of time in the launch. */
   sequence: Array<LaunchSequenceStep>;
+  /** A shortened version of Launch.id. Contains the first 8 characters of the ID. */
   shortenedID: Scalars['String'];
+  /** The status of the launch. */
   status: LaunchStatus;
+  /** Changes that were made to the subgraphs for this launch. */
   subgraphChanges?: Maybe<Array<SubgraphChange>>;
+  /** The time at which this launch was superseded by another launch. */
   supersededAt?: Maybe<Scalars['Timestamp']>;
+  /** Represents the launch that caused this launch to not continue/publish. */
   supersededBy?: Maybe<Launch>;
+  /** Upstream launch represents the launch of the source variant. */
   upstreamLaunch?: Maybe<Launch>;
 };
 
@@ -4132,6 +4312,7 @@ export type OperationCollection = {
   /**
    * If a user has any of these roles, they will be able to edit this
    * collection. This will be null if and only if \`isShared\` is false
+   * @deprecated deprecated in favour of minEditRole
    */
   editRoles?: Maybe<Array<UserPermission>>;
   id: Scalars['ID'];
@@ -4140,6 +4321,7 @@ export type OperationCollection = {
   isShared: Scalars['Boolean'];
   lastUpdatedAt: Scalars['Timestamp'];
   lastUpdatedBy?: Maybe<Identity>;
+  minEditRole?: Maybe<UserPermission>;
   name: Scalars['String'];
   operation?: Maybe<OperationCollectionEntryResult>;
   operations: Array<OperationCollectionEntry>;
@@ -4228,7 +4410,9 @@ export type OperationCollectionMutation = {
   operation?: Maybe<OperationCollectionEntryMutationResult>;
   /** @deprecated Will throw NotImplemented */
   removeFromVariant: RemoveOperationCollectionFromVariantResult;
+  setMinEditRole?: Maybe<UpdateOperationCollectionResult>;
   updateDescription?: Maybe<UpdateOperationCollectionResult>;
+  /** @deprecated Deprecated in favour of setMinEditRole */
   updateEditRoles?: Maybe<UpdateOperationCollectionResult>;
   updateIsFavorite?: Maybe<UpdateOperationCollectionResult>;
   updateIsShared?: Maybe<UpdateOperationCollectionResult>;
@@ -4268,6 +4452,11 @@ export type OperationCollectionMutationOperationArgs = {
 
 export type OperationCollectionMutationRemoveFromVariantArgs = {
   variantRef: Scalars['ID'];
+};
+
+
+export type OperationCollectionMutationSetMinEditRoleArgs = {
+  editRole?: InputMaybe<UserPermission>;
 };
 
 
@@ -4882,11 +5071,15 @@ export enum QueryTriggerWindow {
   Unrecognized = 'UNRECOGNIZED'
 }
 
+/** The documentation for a graph variant, as display in Studio. */
 export type Readme = {
   __typename?: 'Readme';
+  /** Content of the document. */
   content: Scalars['String'];
   id: Scalars['ID'];
+  /** Last time the document was updated. */
   lastUpdatedAt: Scalars['Timestamp'];
+  /** Identity of who updated the document last. */
   lastUpdatedBy?: Maybe<Identity>;
 };
 
@@ -5697,6 +5890,60 @@ export type ServiceTraceArgs = {
  */
 export type ServiceVariantArgs = {
   name: Scalars['String'];
+};
+
+/** Columns of ServiceBillingUsageStats. */
+export enum ServiceBillingUsageStatsColumn {
+  OperationCount = 'OPERATION_COUNT',
+  OperationCountProvidedExplicitly = 'OPERATION_COUNT_PROVIDED_EXPLICITLY',
+  SchemaTag = 'SCHEMA_TAG',
+  Timestamp = 'TIMESTAMP'
+}
+
+export type ServiceBillingUsageStatsDimensions = {
+  __typename?: 'ServiceBillingUsageStatsDimensions';
+  operationCountProvidedExplicitly?: Maybe<Scalars['String']>;
+  schemaTag?: Maybe<Scalars['String']>;
+};
+
+/** Filter for data in ServiceBillingUsageStats. Fields with dimension names represent equality checks. All fields are implicitly ANDed together. */
+export type ServiceBillingUsageStatsFilter = {
+  and?: InputMaybe<Array<ServiceBillingUsageStatsFilter>>;
+  in?: InputMaybe<ServiceBillingUsageStatsFilterIn>;
+  not?: InputMaybe<ServiceBillingUsageStatsFilter>;
+  /** Selects rows whose operationCountProvidedExplicitly dimension equals the given value if not null. To query for the null value, use {in: {operationCountProvidedExplicitly: [null]}} instead. */
+  operationCountProvidedExplicitly?: InputMaybe<Scalars['String']>;
+  or?: InputMaybe<Array<ServiceBillingUsageStatsFilter>>;
+  /** Selects rows whose schemaTag dimension equals the given value if not null. To query for the null value, use {in: {schemaTag: [null]}} instead. */
+  schemaTag?: InputMaybe<Scalars['String']>;
+};
+
+/** Filter for data in ServiceBillingUsageStats. Fields match if the corresponding dimension's value is in the given list. All fields are implicitly ANDed together. */
+export type ServiceBillingUsageStatsFilterIn = {
+  /** Selects rows whose operationCountProvidedExplicitly dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  operationCountProvidedExplicitly?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Selects rows whose schemaTag dimension is in the given list. A null value in the list means a row with null for that dimension. */
+  schemaTag?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ServiceBillingUsageStatsMetrics = {
+  __typename?: 'ServiceBillingUsageStatsMetrics';
+  operationCount: Scalars['Long'];
+};
+
+export type ServiceBillingUsageStatsOrderBySpec = {
+  column: ServiceBillingUsageStatsColumn;
+  direction: Ordering;
+};
+
+export type ServiceBillingUsageStatsRecord = {
+  __typename?: 'ServiceBillingUsageStatsRecord';
+  /** Dimensions of ServiceBillingUsageStats that can be grouped by. */
+  groupBy: ServiceBillingUsageStatsDimensions;
+  /** Metrics of ServiceBillingUsageStats that can be aggregated over. */
+  metrics: ServiceBillingUsageStatsMetrics;
+  /** Starting segment timestamp. */
+  timestamp: Scalars['Timestamp'];
 };
 
 /** Columns of ServiceEdgeServerInfos. */
@@ -6779,6 +7026,7 @@ export type ServiceRoles = {
 /** A time window with a specified granularity over a given service. */
 export type ServiceStatsWindow = {
   __typename?: 'ServiceStatsWindow';
+  billingUsageStats: Array<ServiceBillingUsageStatsRecord>;
   edgeServerInfos: Array<ServiceEdgeServerInfosRecord>;
   errorStats: Array<ServiceErrorStatsRecord>;
   fieldLatencies: Array<ServiceFieldLatenciesRecord>;
@@ -6792,6 +7040,14 @@ export type ServiceStatsWindow = {
   roundedUpTo: Scalars['Timestamp'];
   tracePathErrorsRefs: Array<ServiceTracePathErrorsRefsRecord>;
   traceRefs: Array<ServiceTraceRefsRecord>;
+};
+
+
+/** A time window with a specified granularity over a given service. */
+export type ServiceStatsWindowBillingUsageStatsArgs = {
+  filter?: InputMaybe<ServiceBillingUsageStatsFilter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<ServiceBillingUsageStatsOrderBySpec>>;
 };
 
 
@@ -7115,6 +7371,7 @@ export type SourceLocation = {
 /** A time window with a specified granularity. */
 export type StatsWindow = {
   __typename?: 'StatsWindow';
+  billingUsageStats: Array<BillingUsageStatsRecord>;
   edgeServerInfos: Array<EdgeServerInfosRecord>;
   errorStats: Array<ErrorStatsRecord>;
   fieldLatencies: Array<FieldLatenciesRecord>;
@@ -7127,6 +7384,14 @@ export type StatsWindow = {
   roundedUpTo: Scalars['Timestamp'];
   tracePathErrorsRefs: Array<TracePathErrorsRefsRecord>;
   traceRefs: Array<TraceRefsRecord>;
+};
+
+
+/** A time window with a specified granularity. */
+export type StatsWindowBillingUsageStatsArgs = {
+  filter?: InputMaybe<BillingUsageStatsFilter>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<BillingUsageStatsOrderBySpec>>;
 };
 
 
@@ -7363,6 +7628,8 @@ export type Trace = {
   root: TraceNode;
   signature: Scalars['String'];
   startTime: Scalars['Timestamp'];
+  unexecutedOperationBody?: Maybe<Scalars['String']>;
+  unexecutedOperationName?: Maybe<Scalars['String']>;
   variablesJSON: Array<StringToString>;
 };
 
@@ -7686,9 +7953,11 @@ export type UploadSchemaMutationResponse = {
   code: Scalars['String'];
   /** Human readable result of a schema publish. */
   message: Scalars['String'];
+  /** If successful, the corresponding publication. */
+  publication?: Maybe<SchemaTag>;
   /** Whether the schema publish successfully completed or encountered errors. */
   success: Scalars['Boolean'];
-  /** If successful, the corresponding publish record. */
+  /** If successful, the corresponding publication. */
   tag?: Maybe<SchemaTag>;
 };
 
@@ -7947,6 +8216,7 @@ export enum UserSegment {
   NotSpecified = 'NOT_SPECIFIED',
   ProductionGraphs = 'PRODUCTION_GRAPHS',
   Sandbox = 'SANDBOX',
+  SandboxOperationCollections = 'SANDBOX_OPERATION_COLLECTIONS',
   TryTeam = 'TRY_TEAM'
 }
 
