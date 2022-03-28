@@ -20,7 +20,7 @@ You can also view query plans in [Apollo Studio Explorer](https://www.apollograp
 
 If you have a Federation 2 supergraph file available locally, you can use the following command:
 ```sh
-npx github:apollosolutions/generate-query-plan \
+npx github:@apollosolutions/generate-query-plan \
   --supergraph supergraph.graphql \
   --operation operation.graphql
 ```
@@ -29,7 +29,7 @@ If you have a federated graph in Apollo Studio, you can pass an API key and the 
 
 ```sh
 export APOLLO_KEY="your api key"
-npx github:apollosolutions/generate-query-plan \
+npx github:@apollosolutions/generate-query-plan \
   --graphref mygraph@current \
   --operation operation.graphql
 ```
@@ -41,7 +41,7 @@ The `main` branch of this repo has moved to supporting [Federation 2](https://ww
 NPX allows running code from a specific branch, so you can modify the command to generate a query plan used in `@apollo/gateway@0.x`.
 
 ```sh
-npx github:apollosolutions/generate-query-plan#version-0.x
+npx github:@apollosolutions/generate-query-plan#version-0.x
 ```
 
 For more details see the [README in the `version-0.x` branch](https://github.com/apollosolutions/generate-query-plan/tree/version-0.x).
