@@ -1,4 +1,13 @@
 import gql from 'graphql-tag';
+/** Columns of AccountBillingUsageStats. */
+export var AccountBillingUsageStatsColumn;
+(function (AccountBillingUsageStatsColumn) {
+    AccountBillingUsageStatsColumn["OperationCount"] = "OPERATION_COUNT";
+    AccountBillingUsageStatsColumn["OperationCountProvidedExplicitly"] = "OPERATION_COUNT_PROVIDED_EXPLICITLY";
+    AccountBillingUsageStatsColumn["SchemaTag"] = "SCHEMA_TAG";
+    AccountBillingUsageStatsColumn["ServiceId"] = "SERVICE_ID";
+    AccountBillingUsageStatsColumn["Timestamp"] = "TIMESTAMP";
+})(AccountBillingUsageStatsColumn || (AccountBillingUsageStatsColumn = {}));
 /** Columns of AccountEdgeServerInfos. */
 export var AccountEdgeServerInfosColumn;
 (function (AccountEdgeServerInfosColumn) {
@@ -206,6 +215,16 @@ export var BillingPlanTierV2;
     BillingPlanTierV2["Team"] = "TEAM";
     BillingPlanTierV2["Unknown"] = "UNKNOWN";
 })(BillingPlanTierV2 || (BillingPlanTierV2 = {}));
+/** Columns of BillingUsageStats. */
+export var BillingUsageStatsColumn;
+(function (BillingUsageStatsColumn) {
+    BillingUsageStatsColumn["AccountId"] = "ACCOUNT_ID";
+    BillingUsageStatsColumn["OperationCount"] = "OPERATION_COUNT";
+    BillingUsageStatsColumn["OperationCountProvidedExplicitly"] = "OPERATION_COUNT_PROVIDED_EXPLICITLY";
+    BillingUsageStatsColumn["SchemaTag"] = "SCHEMA_TAG";
+    BillingUsageStatsColumn["ServiceId"] = "SERVICE_ID";
+    BillingUsageStatsColumn["Timestamp"] = "TIMESTAMP";
+})(BillingUsageStatsColumn || (BillingUsageStatsColumn = {}));
 export var CacheScope;
 (function (CacheScope) {
     CacheScope["Private"] = "PRIVATE";
@@ -689,6 +708,14 @@ export var ResponseHints;
     ResponseHints["Timings"] = "TIMINGS";
     ResponseHints["TraceTimings"] = "TRACE_TIMINGS";
 })(ResponseHints || (ResponseHints = {}));
+/** Columns of ServiceBillingUsageStats. */
+export var ServiceBillingUsageStatsColumn;
+(function (ServiceBillingUsageStatsColumn) {
+    ServiceBillingUsageStatsColumn["OperationCount"] = "OPERATION_COUNT";
+    ServiceBillingUsageStatsColumn["OperationCountProvidedExplicitly"] = "OPERATION_COUNT_PROVIDED_EXPLICITLY";
+    ServiceBillingUsageStatsColumn["SchemaTag"] = "SCHEMA_TAG";
+    ServiceBillingUsageStatsColumn["Timestamp"] = "TIMESTAMP";
+})(ServiceBillingUsageStatsColumn || (ServiceBillingUsageStatsColumn = {}));
 /** Columns of ServiceEdgeServerInfos. */
 export var ServiceEdgeServerInfosColumn;
 (function (ServiceEdgeServerInfosColumn) {
@@ -917,6 +944,7 @@ export var UserSegment;
     UserSegment["NotSpecified"] = "NOT_SPECIFIED";
     UserSegment["ProductionGraphs"] = "PRODUCTION_GRAPHS";
     UserSegment["Sandbox"] = "SANDBOX";
+    UserSegment["SandboxOperationCollections"] = "SANDBOX_OPERATION_COLLECTIONS";
     UserSegment["TryTeam"] = "TRY_TEAM";
 })(UserSegment || (UserSegment = {}));
 export var UserType;
