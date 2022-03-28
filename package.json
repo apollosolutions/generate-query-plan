@@ -21,6 +21,8 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "gql": "yarn graphql-codegen && yarn tsc -p studio/tsconfig.json"
+    "gql": "yarn graphql-codegen && yarn tsc -p studio/tsconfig.json",
+    "dev": "node bin/index.js",
+    "dev:example": "yarn dev --supergraph example/supergraph.graphql --operation example/operation.graphql"
   }
 }
