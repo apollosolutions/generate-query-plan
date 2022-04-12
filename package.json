@@ -1,16 +1,16 @@
 {
   "name": "@apollosolutions/query-plan-generator",
-  "version": "2.0.0-preview.7",
+  "version": "2.0.0",
   "main": "src/index.js",
   "bin": "bin/index.js",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@apollo/gateway": "^2.0.0-preview.7",
+    "@apollo/gateway": "^2.0.0",
     "clipanion": "^3.2.0-rc.10",
     "graphql": "^16.3.0",
-    "graphql-request": "^4.1.0",
-    "make-fetch-happen": "^10.0.6"
+    "graphql-request": "^4.2.0",
+    "make-fetch-happen": "^10.1.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",

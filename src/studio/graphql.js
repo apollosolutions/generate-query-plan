@@ -375,6 +375,9 @@ export var ContractVariantFailedStep;
 (function (ContractVariantFailedStep) {
     ContractVariantFailedStep["AddDirectiveDefinitionsIfNotPresent"] = "ADD_DIRECTIVE_DEFINITIONS_IF_NOT_PRESENT";
     ContractVariantFailedStep["DirectiveDefinitionLocationAugmenting"] = "DIRECTIVE_DEFINITION_LOCATION_AUGMENTING";
+    ContractVariantFailedStep["EmptyEnumMasking"] = "EMPTY_ENUM_MASKING";
+    ContractVariantFailedStep["EmptyInputObjectMasking"] = "EMPTY_INPUT_OBJECT_MASKING";
+    ContractVariantFailedStep["EmptyObjectAndInterfaceFieldMasking"] = "EMPTY_OBJECT_AND_INTERFACE_FIELD_MASKING";
     ContractVariantFailedStep["EmptyObjectAndInterfaceMasking"] = "EMPTY_OBJECT_AND_INTERFACE_MASKING";
     ContractVariantFailedStep["EmptyUnionMasking"] = "EMPTY_UNION_MASKING";
     ContractVariantFailedStep["InputValidation"] = "INPUT_VALIDATION";
@@ -592,6 +595,11 @@ export var LinkInfoType;
     LinkInfoType["Other"] = "OTHER";
     LinkInfoType["Repository"] = "REPOSITORY";
 })(LinkInfoType || (LinkInfoType = {}));
+export var OnboardingArchitecture;
+(function (OnboardingArchitecture) {
+    OnboardingArchitecture["Monolith"] = "MONOLITH";
+    OnboardingArchitecture["Supergraph"] = "SUPERGRAPH";
+})(OnboardingArchitecture || (OnboardingArchitecture = {}));
 /** Columns of OperationCheckStats. */
 export var OperationCheckStatsColumn;
 (function (OperationCheckStatsColumn) {
@@ -932,6 +940,7 @@ export var UserPermission;
     UserPermission["BillingManager"] = "BILLING_MANAGER";
     UserPermission["Consumer"] = "CONSUMER";
     UserPermission["Contributor"] = "CONTRIBUTOR";
+    UserPermission["Documenter"] = "DOCUMENTER";
     UserPermission["GraphAdmin"] = "GRAPH_ADMIN";
     UserPermission["LegacyGraphKey"] = "LEGACY_GRAPH_KEY";
     UserPermission["Observer"] = "OBSERVER";
