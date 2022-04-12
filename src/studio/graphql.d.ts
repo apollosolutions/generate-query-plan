@@ -1867,7 +1867,7 @@ export declare type CheckPartialSchemaResult = {
     checkSchemaResult?: Maybe<CheckSchemaResult>;
     /** Result of compostion run as part of the overall subgraph check. */
     compositionValidationResult: CompositionValidationResult;
-    /** If any modifications were detected in the composed core schema */
+    /** Whether any modifications were detected in the composed core schema. */
     coreSchemaModified: Scalars['Boolean'];
     /** Check workflow associated with the overall subgraph check. */
     workflow?: Maybe<CheckWorkflow>;
@@ -2024,7 +2024,7 @@ export declare type CompositionAndUpsertResult = {
     graphCompositionID: Scalars['String'];
     /** Copy text for the launch result of a publish. */
     launchCliCopy?: Maybe<Scalars['String']>;
-    /** Link to corresponding launches page on Studio if avaliable. */
+    /** Link to corresponding launches page on Studio if available. */
     launchUrl?: Maybe<Scalars['String']>;
     /** List of subgraphs that are included in this composition. */
     subgraphConfigs: Array<SubgraphConfig>;
@@ -2181,6 +2181,9 @@ export declare type ContractPreviewSuccess = {
 export declare enum ContractVariantFailedStep {
     AddDirectiveDefinitionsIfNotPresent = "ADD_DIRECTIVE_DEFINITIONS_IF_NOT_PRESENT",
     DirectiveDefinitionLocationAugmenting = "DIRECTIVE_DEFINITION_LOCATION_AUGMENTING",
+    EmptyEnumMasking = "EMPTY_ENUM_MASKING",
+    EmptyInputObjectMasking = "EMPTY_INPUT_OBJECT_MASKING",
+    EmptyObjectAndInterfaceFieldMasking = "EMPTY_OBJECT_AND_INTERFACE_FIELD_MASKING",
     EmptyObjectAndInterfaceMasking = "EMPTY_OBJECT_AND_INTERFACE_MASKING",
     EmptyUnionMasking = "EMPTY_UNION_MASKING",
     InputValidation = "INPUT_VALIDATION",
@@ -2873,6 +2876,8 @@ export declare type GraphVariant = {
     /** If the graphql endpoint is set up to accept cookies. */
     sendCookies?: Maybe<Scalars['Boolean']>;
     sourceVariant?: Maybe<GraphVariant>;
+    /** Subgraph of a given name, null if non-existent. */
+    subgraph?: Maybe<FederatedImplementingService>;
     /**
      * List of subgraphs that comprise a variant, null if not federated.
      * Set includeDeleted to see deleted subgraphs.
@@ -2924,6 +2929,13 @@ export declare type GraphVariantRegistryStatsWindowArgs = {
     from: Scalars['Timestamp'];
     resolution?: InputMaybe<Resolution>;
     to?: InputMaybe<Scalars['Timestamp']>;
+};
+/**
+ * A variant of a graph, often corresponding to an environment where a graph runs (e.g. staging).
+ * See https://www.apollographql.com/docs/studio/org/graphs/ for more details.
+ */
+export declare type GraphVariantSubgraphArgs = {
+    name: Scalars['ID'];
 };
 /**
  * A variant of a graph, often corresponding to an environment where a graph runs (e.g. staging).
@@ -3512,8 +3524,6 @@ export declare type Mutation = {
     newAccount?: Maybe<Account>;
     newService?: Maybe<Service>;
     operationCollection?: Maybe<OperationCollectionMutation>;
-    /** Refresh all plans from third-party billing service */
-    plansRefreshBilling?: Maybe<Scalars['Void']>;
     /** Report a running GraphQL server's schema. */
     reportSchema?: Maybe<ReportSchemaResult>;
     /** Ask for a user's password to be reset by E-mail */
@@ -3569,6 +3579,7 @@ export declare type MutationNewServiceArgs = {
     id: Scalars['ID'];
     isDev?: Scalars['Boolean'];
     name?: InputMaybe<Scalars['String']>;
+    onboardingArchitecture?: InputMaybe<OnboardingArchitecture>;
     title?: InputMaybe<Scalars['String']>;
 };
 export declare type MutationOperationCollectionArgs = {
@@ -3704,6 +3715,14 @@ export declare type NotFoundError = Error & {
     __typename?: 'NotFoundError';
     message: Scalars['String'];
 };
+export declare type OdysseyAttempt = {
+    __typename?: 'OdysseyAttempt';
+    completedAt?: Maybe<Scalars['Timestamp']>;
+    id: Scalars['ID'];
+    responses: Array<OdysseyResponse>;
+    startedAt: Scalars['Timestamp'];
+    testId: Scalars['String'];
+};
 export declare type OdysseyCertification = {
     __typename?: 'OdysseyCertification';
     certificationId: Scalars['String'];
@@ -3726,6 +3745,19 @@ export declare type OdysseyCourseInput = {
     completedAt?: InputMaybe<Scalars['Timestamp']>;
     courseId: Scalars['String'];
 };
+export declare type OdysseyResponse = {
+    __typename?: 'OdysseyResponse';
+    correct: Scalars['Boolean'];
+    id: Scalars['ID'];
+    questionId: Scalars['String'];
+    values: Array<OdysseyValue>;
+};
+export declare type OdysseyResponseInput = {
+    attemptId: Scalars['ID'];
+    correct: Scalars['Boolean'];
+    questionId: Scalars['String'];
+    values: Array<Scalars['String']>;
+};
 export declare type OdysseyTask = {
     __typename?: 'OdysseyTask';
     completedAt?: Maybe<Scalars['Timestamp']>;
@@ -3737,6 +3769,15 @@ export declare type OdysseyTaskInput = {
     taskId: Scalars['String'];
     value?: InputMaybe<Scalars['String']>;
 };
+export declare type OdysseyValue = {
+    __typename?: 'OdysseyValue';
+    id: Scalars['ID'];
+    value: Scalars['String'];
+};
+export declare enum OnboardingArchitecture {
+    Monolith = "MONOLITH",
+    Supergraph = "SUPERGRAPH"
+}
 export declare type Operation = {
     __typename?: 'Operation';
     id: Scalars['ID'];
@@ -4144,6 +4185,8 @@ export declare type Query = {
     account?: Maybe<Account>;
     /** Retrieve account by billing provider identifier */
     accountByBillingCode?: Maybe<Account>;
+    /** Retrieve account by internal id */
+    accountByInternalID?: Maybe<Account>;
     /** Whether an account ID is available for mutation{newAccount(id:)} */
     accountIDAvailable: Scalars['Boolean'];
     /** All accounts */
@@ -4214,6 +4257,9 @@ export declare type QueryAccountArgs = {
     id: Scalars['ID'];
 };
 export declare type QueryAccountByBillingCodeArgs = {
+    id: Scalars['ID'];
+};
+export declare type QueryAccountByInternalIdArgs = {
     id: Scalars['ID'];
 };
 export declare type QueryAccountIdAvailableArgs = {
@@ -4884,6 +4930,7 @@ export declare type Service = Identity & {
     createdAt: Scalars['Timestamp'];
     createdBy?: Maybe<Identity>;
     datadogMetricsConfig?: Maybe<DatadogMetricsConfig>;
+    defaultBuildPipelineTrack?: Maybe<Scalars['String']>;
     deletedAt?: Maybe<Scalars['Timestamp']>;
     description?: Maybe<Scalars['String']>;
     devGraphOwner?: Maybe<User>;
@@ -4913,6 +4960,7 @@ export declare type Service = Identity & {
      * @deprecated Use Service.title
      */
     name: Scalars['String'];
+    onboardingArchitecture?: Maybe<OnboardingArchitecture>;
     operation?: Maybe<Operation>;
     /** Gets the operations and their approved changes for this graph, checkID, and operationID. */
     operationsAcceptedChanges: Array<OperationAcceptedChange>;
@@ -5600,11 +5648,6 @@ export declare type ServiceMutation = {
     newKey: GraphApiKey;
     /** Adds an override to the given users permission for this graph */
     overrideUserPermission?: Maybe<Service>;
-    /**
-     * Returns a preview of the Core and API schema contracts derived from a source variant and a set of filter configurations
-     * @deprecated use GraphVariant.contractPreview instead
-     */
-    previewContractVariant: ContractVariantPreviewResult;
     /** Promote the schema with the given SHA-256 hash to active for the given variant/tag. */
     promoteSchema: PromoteSchemaResponseOrError;
     /** Publish to a subgraph. If composition is successful, this will update running routers. */
@@ -5617,6 +5660,7 @@ export declare type ServiceMutation = {
     /** @deprecated use Mutation.reportSchema instead */
     reportServerInfo?: Maybe<ReportServerInfoResult>;
     service: Service;
+    setDefaultBuildPipelineTrack?: Maybe<Scalars['String']>;
     /**
      * Store a given schema document. This schema will be attached to the graph but
      * not be associated with any variant. On success, returns the schema hash.
@@ -5760,11 +5804,6 @@ export declare type ServiceMutationOverrideUserPermissionArgs = {
     userID: Scalars['ID'];
 };
 /** Mutations to a graph. */
-export declare type ServiceMutationPreviewContractVariantArgs = {
-    filterConfig: FilterConfigInput;
-    sourceVariant: Scalars['String'];
-};
-/** Mutations to a graph. */
 export declare type ServiceMutationPromoteSchemaArgs = {
     graphVariant: Scalars['String'];
     historicParameters?: InputMaybe<HistoricQueryParameters>;
@@ -5807,6 +5846,10 @@ export declare type ServiceMutationRenameKeyArgs = {
 export declare type ServiceMutationReportServerInfoArgs = {
     executableSchema?: InputMaybe<Scalars['String']>;
     info: EdgeServerInfo;
+};
+/** Mutations to a graph. */
+export declare type ServiceMutationSetDefaultBuildPipelineTrackArgs = {
+    version: Scalars['String'];
 };
 /** Mutations to a graph. */
 export declare type ServiceMutationStoreSchemaDocumentArgs = {
@@ -7053,6 +7096,8 @@ export declare type User = Identity & {
     memberships: Array<UserMembership>;
     /** The name (first and last) of a user. */
     name: Scalars['String'];
+    odysseyAttempt?: Maybe<OdysseyAttempt>;
+    odysseyAttempts: Array<OdysseyAttempt>;
     odysseyCertifications?: Maybe<Array<OdysseyCertification>>;
     odysseyCourses?: Maybe<Array<OdysseyCourse>>;
     odysseyHasEarlyAccess: Scalars['Boolean'];
@@ -7071,6 +7116,10 @@ export declare type UserApiKeysArgs = {
 /** A registered user. */
 export declare type UserAvatarUrlArgs = {
     size?: Scalars['Int'];
+};
+/** A registered user. */
+export declare type UserOdysseyAttemptArgs = {
+    id: Scalars['ID'];
 };
 export declare type UserApiKey = ApiKey & {
     __typename?: 'UserApiKey';
@@ -7099,6 +7148,7 @@ export declare type UserMutation = {
     acceptPrivacyPolicy?: Maybe<Scalars['Void']>;
     /** Change the user's password */
     changePassword?: Maybe<Scalars['Void']>;
+    createOdysseyAttempt?: Maybe<OdysseyAttempt>;
     createOdysseyCertification?: Maybe<OdysseyCertification>;
     createOdysseyCourses?: Maybe<Array<OdysseyCourse>>;
     createOdysseyTasks?: Maybe<Array<OdysseyTask>>;
@@ -7121,6 +7171,7 @@ export declare type UserMutation = {
     renameKey?: Maybe<UserApiKey>;
     resendVerificationEmail?: Maybe<Scalars['Void']>;
     setOdysseyCourse?: Maybe<OdysseyCourse>;
+    setOdysseyResponse?: Maybe<OdysseyResponse>;
     setOdysseyTask?: Maybe<OdysseyTask>;
     /** Submit a zendesk ticket for this user */
     submitZendeskTicket?: Maybe<ZendeskTicket>;
@@ -7130,6 +7181,7 @@ export declare type UserMutation = {
     updateBetaFeaturesOn?: Maybe<User>;
     /** Update the status of a feature for this. For example, if you want to hide an introductory popup. */
     updateFeatureIntros?: Maybe<User>;
+    updateOdysseyAttempt?: Maybe<OdysseyAttempt>;
     /**
      * Update user to have the given internal mdg admin role.
      * It is necessary to be an MDG_INTERNAL_SUPER_ADMIN to perform update.
@@ -7143,6 +7195,9 @@ export declare type UserMutation = {
 export declare type UserMutationChangePasswordArgs = {
     newPassword: Scalars['String'];
     previousPassword: Scalars['String'];
+};
+export declare type UserMutationCreateOdysseyAttemptArgs = {
+    testId: Scalars['String'];
 };
 export declare type UserMutationCreateOdysseyCertificationArgs = {
     certificationId: Scalars['String'];
@@ -7169,6 +7224,9 @@ export declare type UserMutationRenameKeyArgs = {
 export declare type UserMutationSetOdysseyCourseArgs = {
     course: OdysseyCourseInput;
 };
+export declare type UserMutationSetOdysseyResponseArgs = {
+    response: OdysseyResponseInput;
+};
 export declare type UserMutationSetOdysseyTaskArgs = {
     task: OdysseyTaskInput;
 };
@@ -7194,6 +7252,10 @@ export declare type UserMutationUpdateBetaFeaturesOnArgs = {
 export declare type UserMutationUpdateFeatureIntrosArgs = {
     newFeatureIntros?: InputMaybe<FeatureIntrosInput>;
 };
+export declare type UserMutationUpdateOdysseyAttemptArgs = {
+    completedAt?: InputMaybe<Scalars['Timestamp']>;
+    id: Scalars['ID'];
+};
 export declare type UserMutationUpdateRoleArgs = {
     newRole?: InputMaybe<InternalMdgAdminRole>;
 };
@@ -7204,6 +7266,7 @@ export declare enum UserPermission {
     BillingManager = "BILLING_MANAGER",
     Consumer = "CONSUMER",
     Contributor = "CONTRIBUTOR",
+    Documenter = "DOCUMENTER",
     GraphAdmin = "GRAPH_ADMIN",
     LegacyGraphKey = "LEGACY_GRAPH_KEY",
     Observer = "OBSERVER",
