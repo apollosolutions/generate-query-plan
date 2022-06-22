@@ -2,7 +2,7 @@ import {
   operationFromDocument,
   buildSupergraphSchema,
 } from "@apollo/federation-internals";
-import { QueryPlanner } from "@apollo/query-planner";
+import { QueryPlanner, prettyFormatQueryPlan } from "@apollo/query-planner";
 import { Command, Option } from "clipanion";
 import { parse } from "graphql";
 import { readFile } from "fs/promises";
@@ -15,6 +15,8 @@ export class DefaultCommand extends Command {
   graphref = Option.String("--graphref");
 
   operation = Option.String("--operation", { required: true });
+
+  pretty = Option.Boolean("--pretty");
 
   async execute() {
     if (this.supergraph && this.graphref) {
@@ -39,8 +41,12 @@ export class DefaultCommand extends Command {
 
     const queryPlan = await generateQueryPlan(result[0], operation);
 
-    this.context.stdout.write(JSON.stringify(queryPlan, null, 2));
-    this.context.stdout.write("\n");
+    if (this.pretty) {
+      this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
+    } else {
+      this.context.stdout.write(JSON.stringify(queryPlan, null, 2));
+      this.context.stdout.write("\n");
+    }
   }
 }
 
