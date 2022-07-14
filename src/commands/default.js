@@ -18,6 +18,8 @@ export class DefaultCommand extends Command {
 
   pretty = Option.Boolean("--pretty");
 
+  sudo = Option.Boolean("--sudo");
+
   async execute() {
     if (this.supergraph && this.graphref) {
       this.context.stderr.write(
@@ -29,7 +31,7 @@ export class DefaultCommand extends Command {
     const result = this.supergraph
       ? await fetchSupergraphFromFile(this.supergraph)
       : this.graphref
-      ? await fetchSupergraphFromStudio(this.graphref)
+      ? await fetchSupergraphFromStudio(this.graphref, this.sudo ?? false)
       : null;
 
     if (!result) {
@@ -71,8 +73,9 @@ async function fetchSupergraphFromFile(file) {
 
 /**
  * @param {string} ref
+ * @param {boolean} sudo
  */
-async function fetchSupergraphFromStudio(ref) {
+async function fetchSupergraphFromStudio(ref, sudo) {
   const apiKey = process.env.APOLLO_KEY;
   if (!apiKey) {
     throw new Error("missing APOLLO_KEY");
@@ -83,6 +86,7 @@ async function fetchSupergraphFromStudio(ref) {
     {
       headers: {
         "x-api-key": apiKey,
+        ...(sudo ? { "apollo-sudo": String(sudo) } : {}),
       },
     }
   );
