@@ -1,5 +1,9 @@
 import { buildOperationContext } from "@apollo/gateway";
-import { buildComposedSchema, QueryPlanner } from "@apollo/query-planner";
+import {
+  buildComposedSchema,
+  QueryPlanner,
+  prettyFormatQueryPlan,
+} from "@apollo/query-planner";
 import { Command, Option } from "clipanion";
 import { parse } from "graphql";
 import { readFile } from "fs/promises";
@@ -13,6 +17,10 @@ export class DefaultCommand extends Command {
 
   operation = Option.String("--operation", { required: true });
 
+  pretty = Option.Boolean("--pretty");
+
+  sudo = Option.Boolean("--sudo");
+
   async execute() {
     if (this.supergraph && this.graphref) {
       this.context.stderr.write(
@@ -24,7 +32,7 @@ export class DefaultCommand extends Command {
     const schema = this.supergraph
       ? await fetchSupergraphFromFile(this.supergraph)
       : this.graphref
-      ? await fetchSupergraphFromStudio(this.graphref)
+      ? await fetchSupergraphFromStudio(this.graphref, this.sudo ?? false)
       : null;
 
     if (!schema) {
@@ -36,7 +44,12 @@ export class DefaultCommand extends Command {
 
     const queryPlan = await generateQueryPlan(schema, operation);
 
-    this.context.stdout.write(JSON.stringify(queryPlan, null, 2));
+    if (this.pretty) {
+      this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
+    } else {
+      this.context.stdout.write(JSON.stringify(queryPlan, null, 2));
+    }
+
     this.context.stdout.write("\n");
   }
 }
@@ -68,8 +81,9 @@ async function fetchSupergraphFromFile(file) {
 
 /**
  * @param {string} ref
+ * @param {boolean} sudo
  */
-async function fetchSupergraphFromStudio(ref) {
+async function fetchSupergraphFromStudio(ref, sudo) {
   const apiKey = process.env.APOLLO_KEY;
   if (!apiKey) {
     throw new Error("missing APOLLO_KEY");
@@ -80,6 +94,7 @@ async function fetchSupergraphFromStudio(ref) {
     {
       headers: {
         "x-api-key": apiKey,
+        ...(sudo ? { "apollo-sudo": String(sudo) } : {}),
       },
     }
   );
