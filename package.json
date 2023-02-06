@@ -7,7 +7,7 @@
   "type": "module",
   "dependencies": {
     "@apollo/gateway": "^0.50.2",
-    "clipanion": "^3.2.0-rc.10",
+    "clipanion": "^3.2.0-rc.16",
     "graphql": "^16.3.0",
     "graphql-request": "^4.1.0",
     "make-fetch-happen": "^10.1.2"
