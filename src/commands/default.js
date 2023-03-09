@@ -59,7 +59,9 @@ export class DefaultCommand extends Command {
  */
 export async function generateQueryPlan(schema, operationDoc, operationName) {
   const documentNode = parse(operationDoc);
-  const operation = operationFromDocument(schema, documentNode, operationName);
+  const operation = operationFromDocument(schema, documentNode, {
+    operationName,
+  });
   const queryPlanner = new QueryPlanner(schema);
   return queryPlanner.buildQueryPlan(operation);
 }
