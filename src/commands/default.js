@@ -1,6 +1,6 @@
 import {
   operationFromDocument,
-  buildSupergraphSchema,
+  Supergraph
 } from "@apollo/federation-internals";
 import { QueryPlanner, prettyFormatQueryPlan } from "@apollo/query-planner";
 import { Command, Option } from "clipanion";
@@ -31,8 +31,8 @@ export class DefaultCommand extends Command {
     const result = this.supergraph
       ? await fetchSupergraphFromFile(this.supergraph)
       : this.graphref
-      ? await fetchSupergraphFromStudio(this.graphref, this.sudo ?? false)
-      : null;
+        ? await fetchSupergraphFromStudio(this.graphref, this.sudo ?? false)
+        : null;
 
     if (!result) {
       this.context.stderr.write("cannot load supergraph");
@@ -41,7 +41,7 @@ export class DefaultCommand extends Command {
 
     const operation = await readFile(this.operation, "utf-8");
 
-    const queryPlan = await generateQueryPlan(result[0], operation);
+    const queryPlan = await generateQueryPlan(result, operation);
 
     if (this.pretty) {
       this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
@@ -53,16 +53,16 @@ export class DefaultCommand extends Command {
 }
 
 /**
- * @param {import("@apollo/federation-internals").Schema} schema
+ * @param {import("@apollo/federation-internals").Supergraph} supergraph
  * @param {string} operationDoc
  * @param {string} [operationName]
  */
-export async function generateQueryPlan(schema, operationDoc, operationName) {
+export async function generateQueryPlan(supergraph, operationDoc, operationName) {
   const documentNode = parse(operationDoc);
-  const operation = operationFromDocument(schema, documentNode, {
+  const operation = operationFromDocument(supergraph.schema, documentNode, {
     operationName,
   });
-  const queryPlanner = new QueryPlanner(schema);
+  const queryPlanner = new QueryPlanner(supergraph);
   return queryPlanner.buildQueryPlan(operation);
 }
 
@@ -70,7 +70,7 @@ export async function generateQueryPlan(schema, operationDoc, operationName) {
  * @param {string} file
  */
 async function fetchSupergraphFromFile(file) {
-  return buildSupergraphSchema(await readFile(file, "utf-8"));
+  return Supergraph.build(await readFile(file, "utf-8"));
 }
 
 /**
@@ -108,7 +108,7 @@ async function fetchSupergraphFromStudio(ref, sudo) {
     return null;
   }
 
-  return buildSupergraphSchema(
+  return Supergraph.build(
     resp.variant.latestApprovedLaunch.build.result.coreSchema.coreDocument
   );
 }
