@@ -2,8 +2,12 @@ import gql from 'graphql-tag';
 /** Columns of AccountBillingUsageStats. */
 export var AccountBillingUsageStatsColumn;
 (function (AccountBillingUsageStatsColumn) {
+    AccountBillingUsageStatsColumn["AgentVersion"] = "AGENT_VERSION";
+    AccountBillingUsageStatsColumn["GraphDeploymentType"] = "GRAPH_DEPLOYMENT_TYPE";
     AccountBillingUsageStatsColumn["OperationCount"] = "OPERATION_COUNT";
     AccountBillingUsageStatsColumn["OperationCountProvidedExplicitly"] = "OPERATION_COUNT_PROVIDED_EXPLICITLY";
+    AccountBillingUsageStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    AccountBillingUsageStatsColumn["OperationType"] = "OPERATION_TYPE";
     AccountBillingUsageStatsColumn["SchemaTag"] = "SCHEMA_TAG";
     AccountBillingUsageStatsColumn["ServiceId"] = "SERVICE_ID";
     AccountBillingUsageStatsColumn["Timestamp"] = "TIMESTAMP";
@@ -37,6 +41,20 @@ export var AccountErrorStatsColumn;
     AccountErrorStatsColumn["ServiceId"] = "SERVICE_ID";
     AccountErrorStatsColumn["Timestamp"] = "TIMESTAMP";
 })(AccountErrorStatsColumn || (AccountErrorStatsColumn = {}));
+/** Columns of AccountFieldExecutions. */
+export var AccountFieldExecutionsColumn;
+(function (AccountFieldExecutionsColumn) {
+    AccountFieldExecutionsColumn["ErrorsCount"] = "ERRORS_COUNT";
+    AccountFieldExecutionsColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
+    AccountFieldExecutionsColumn["FieldName"] = "FIELD_NAME";
+    AccountFieldExecutionsColumn["ObservedExecutionCount"] = "OBSERVED_EXECUTION_COUNT";
+    AccountFieldExecutionsColumn["ParentType"] = "PARENT_TYPE";
+    AccountFieldExecutionsColumn["ReferencingOperationCount"] = "REFERENCING_OPERATION_COUNT";
+    AccountFieldExecutionsColumn["RequestsWithErrorsCount"] = "REQUESTS_WITH_ERRORS_COUNT";
+    AccountFieldExecutionsColumn["SchemaTag"] = "SCHEMA_TAG";
+    AccountFieldExecutionsColumn["ServiceId"] = "SERVICE_ID";
+    AccountFieldExecutionsColumn["Timestamp"] = "TIMESTAMP";
+})(AccountFieldExecutionsColumn || (AccountFieldExecutionsColumn = {}));
 /** Columns of AccountFieldLatencies. */
 export var AccountFieldLatenciesColumn;
 (function (AccountFieldLatenciesColumn) {
@@ -56,6 +74,8 @@ export var AccountFieldUsageColumn;
     AccountFieldUsageColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
     AccountFieldUsageColumn["ExecutionCount"] = "EXECUTION_COUNT";
     AccountFieldUsageColumn["FieldName"] = "FIELD_NAME";
+    AccountFieldUsageColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    AccountFieldUsageColumn["OperationType"] = "OPERATION_TYPE";
     AccountFieldUsageColumn["ParentType"] = "PARENT_TYPE";
     AccountFieldUsageColumn["QueryId"] = "QUERY_ID";
     AccountFieldUsageColumn["QueryName"] = "QUERY_NAME";
@@ -65,12 +85,19 @@ export var AccountFieldUsageColumn;
     AccountFieldUsageColumn["ServiceId"] = "SERVICE_ID";
     AccountFieldUsageColumn["Timestamp"] = "TIMESTAMP";
 })(AccountFieldUsageColumn || (AccountFieldUsageColumn = {}));
+export var AccountLockType;
+(function (AccountLockType) {
+    AccountLockType["AutomatedTrialEnd"] = "AUTOMATED_TRIAL_END";
+    AccountLockType["Manual"] = "MANUAL";
+})(AccountLockType || (AccountLockType = {}));
 /** Columns of AccountOperationCheckStats. */
 export var AccountOperationCheckStatsColumn;
 (function (AccountOperationCheckStatsColumn) {
     AccountOperationCheckStatsColumn["CachedRequestsCount"] = "CACHED_REQUESTS_COUNT";
     AccountOperationCheckStatsColumn["ClientName"] = "CLIENT_NAME";
     AccountOperationCheckStatsColumn["ClientVersion"] = "CLIENT_VERSION";
+    AccountOperationCheckStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    AccountOperationCheckStatsColumn["OperationType"] = "OPERATION_TYPE";
     AccountOperationCheckStatsColumn["QueryId"] = "QUERY_ID";
     AccountOperationCheckStatsColumn["QueryName"] = "QUERY_NAME";
     AccountOperationCheckStatsColumn["SchemaTag"] = "SCHEMA_TAG";
@@ -88,6 +115,8 @@ export var AccountQueryStatsColumn;
     AccountQueryStatsColumn["ClientVersion"] = "CLIENT_VERSION";
     AccountQueryStatsColumn["ForbiddenOperationCount"] = "FORBIDDEN_OPERATION_COUNT";
     AccountQueryStatsColumn["FromEngineproxy"] = "FROM_ENGINEPROXY";
+    AccountQueryStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    AccountQueryStatsColumn["OperationType"] = "OPERATION_TYPE";
     AccountQueryStatsColumn["QueryId"] = "QUERY_ID";
     AccountQueryStatsColumn["QueryName"] = "QUERY_NAME";
     AccountQueryStatsColumn["RegisteredOperationCount"] = "REGISTERED_OPERATION_COUNT";
@@ -133,15 +162,16 @@ export var AccountTraceRefsColumn;
     AccountTraceRefsColumn["ClientName"] = "CLIENT_NAME";
     AccountTraceRefsColumn["ClientVersion"] = "CLIENT_VERSION";
     AccountTraceRefsColumn["DurationBucket"] = "DURATION_BUCKET";
-    AccountTraceRefsColumn["DurationNs"] = "DURATION_NS";
+    AccountTraceRefsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    AccountTraceRefsColumn["OperationType"] = "OPERATION_TYPE";
     AccountTraceRefsColumn["QueryId"] = "QUERY_ID";
     AccountTraceRefsColumn["QueryName"] = "QUERY_NAME";
     AccountTraceRefsColumn["SchemaHash"] = "SCHEMA_HASH";
     AccountTraceRefsColumn["SchemaTag"] = "SCHEMA_TAG";
     AccountTraceRefsColumn["ServiceId"] = "SERVICE_ID";
     AccountTraceRefsColumn["Timestamp"] = "TIMESTAMP";
+    AccountTraceRefsColumn["TraceCount"] = "TRACE_COUNT";
     AccountTraceRefsColumn["TraceId"] = "TRACE_ID";
-    AccountTraceRefsColumn["TraceSizeBytes"] = "TRACE_SIZE_BYTES";
 })(AccountTraceRefsColumn || (AccountTraceRefsColumn = {}));
 export var ActorType;
 (function (ActorType) {
@@ -154,6 +184,15 @@ export var ActorType;
     ActorType["System"] = "SYSTEM";
     ActorType["User"] = "USER";
 })(ActorType || (ActorType = {}));
+export var AuditAction;
+(function (AuditAction) {
+    AuditAction["BroadcastMessage"] = "BroadcastMessage";
+    AuditAction["CreateMessage"] = "CreateMessage";
+    AuditAction["EditMessage"] = "EditMessage";
+    AuditAction["RecallMessage"] = "RecallMessage";
+    AuditAction["TestMessage"] = "TestMessage";
+    AuditAction["UpdateMessageState"] = "UpdateMessageState";
+})(AuditAction || (AuditAction = {}));
 export var AuditStatus;
 (function (AuditStatus) {
     AuditStatus["Cancelled"] = "CANCELLED";
@@ -189,42 +228,69 @@ export var BillingPlanKind;
     BillingPlanKind["EnterpriseInternal"] = "ENTERPRISE_INTERNAL";
     BillingPlanKind["EnterprisePaid"] = "ENTERPRISE_PAID";
     BillingPlanKind["EnterprisePilot"] = "ENTERPRISE_PILOT";
+    BillingPlanKind["EnterpriseTrial"] = "ENTERPRISE_TRIAL";
+    BillingPlanKind["OneFree"] = "ONE_FREE";
+    BillingPlanKind["OnePaid"] = "ONE_PAID";
+    BillingPlanKind["Serverless"] = "SERVERLESS";
+    BillingPlanKind["ServerlessFree"] = "SERVERLESS_FREE";
+    BillingPlanKind["ServerlessPaid"] = "SERVERLESS_PAID";
+    BillingPlanKind["Starter"] = "STARTER";
     BillingPlanKind["TeamPaid"] = "TEAM_PAID";
     BillingPlanKind["TeamTrial"] = "TEAM_TRIAL";
+    BillingPlanKind["Unknown"] = "UNKNOWN";
 })(BillingPlanKind || (BillingPlanKind = {}));
-export var BillingPlanKindV2;
-(function (BillingPlanKindV2) {
-    BillingPlanKindV2["Community"] = "COMMUNITY";
-    BillingPlanKindV2["EnterpriseInternal"] = "ENTERPRISE_INTERNAL";
-    BillingPlanKindV2["EnterprisePaid"] = "ENTERPRISE_PAID";
-    BillingPlanKindV2["EnterprisePilot"] = "ENTERPRISE_PILOT";
-    BillingPlanKindV2["TeamPaid"] = "TEAM_PAID";
-    BillingPlanKindV2["TeamTrial"] = "TEAM_TRIAL";
-    BillingPlanKindV2["Unknown"] = "UNKNOWN";
-})(BillingPlanKindV2 || (BillingPlanKindV2 = {}));
 export var BillingPlanTier;
 (function (BillingPlanTier) {
     BillingPlanTier["Community"] = "COMMUNITY";
     BillingPlanTier["Enterprise"] = "ENTERPRISE";
+    BillingPlanTier["One"] = "ONE";
     BillingPlanTier["Team"] = "TEAM";
+    BillingPlanTier["Unknown"] = "UNKNOWN";
+    BillingPlanTier["UsageBased"] = "USAGE_BASED";
 })(BillingPlanTier || (BillingPlanTier = {}));
-export var BillingPlanTierV2;
-(function (BillingPlanTierV2) {
-    BillingPlanTierV2["Community"] = "COMMUNITY";
-    BillingPlanTierV2["Enterprise"] = "ENTERPRISE";
-    BillingPlanTierV2["Team"] = "TEAM";
-    BillingPlanTierV2["Unknown"] = "UNKNOWN";
-})(BillingPlanTierV2 || (BillingPlanTierV2 = {}));
 /** Columns of BillingUsageStats. */
 export var BillingUsageStatsColumn;
 (function (BillingUsageStatsColumn) {
     BillingUsageStatsColumn["AccountId"] = "ACCOUNT_ID";
+    BillingUsageStatsColumn["AgentVersion"] = "AGENT_VERSION";
+    BillingUsageStatsColumn["GraphDeploymentType"] = "GRAPH_DEPLOYMENT_TYPE";
     BillingUsageStatsColumn["OperationCount"] = "OPERATION_COUNT";
     BillingUsageStatsColumn["OperationCountProvidedExplicitly"] = "OPERATION_COUNT_PROVIDED_EXPLICITLY";
+    BillingUsageStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    BillingUsageStatsColumn["OperationType"] = "OPERATION_TYPE";
     BillingUsageStatsColumn["SchemaTag"] = "SCHEMA_TAG";
     BillingUsageStatsColumn["ServiceId"] = "SERVICE_ID";
     BillingUsageStatsColumn["Timestamp"] = "TIMESTAMP";
 })(BillingUsageStatsColumn || (BillingUsageStatsColumn = {}));
+export var BillingUsageStatsWindowSize;
+(function (BillingUsageStatsWindowSize) {
+    BillingUsageStatsWindowSize["Day"] = "DAY";
+    BillingUsageStatsWindowSize["Hour"] = "HOUR";
+    BillingUsageStatsWindowSize["Month"] = "MONTH";
+    BillingUsageStatsWindowSize["None"] = "NONE";
+})(BillingUsageStatsWindowSize || (BillingUsageStatsWindowSize = {}));
+export var BuildPipelineTrack;
+(function (BuildPipelineTrack) {
+    BuildPipelineTrack["Fed_1_0"] = "FED_1_0";
+    BuildPipelineTrack["Fed_1_1"] = "FED_1_1";
+    BuildPipelineTrack["Fed_2_0"] = "FED_2_0";
+    BuildPipelineTrack["Fed_2_1"] = "FED_2_1";
+    BuildPipelineTrack["Fed_2_3"] = "FED_2_3";
+    BuildPipelineTrack["Fed_2_4"] = "FED_2_4";
+    BuildPipelineTrack["Fed_2_5"] = "FED_2_5";
+})(BuildPipelineTrack || (BuildPipelineTrack = {}));
+export var BuildPipelineTrackBadge;
+(function (BuildPipelineTrackBadge) {
+    BuildPipelineTrackBadge["Deprecated"] = "DEPRECATED";
+    BuildPipelineTrackBadge["Experimental"] = "EXPERIMENTAL";
+    BuildPipelineTrackBadge["Latest"] = "LATEST";
+    BuildPipelineTrackBadge["Unsupported"] = "UNSUPPORTED";
+})(BuildPipelineTrackBadge || (BuildPipelineTrackBadge = {}));
+export var CacheControlScope;
+(function (CacheControlScope) {
+    CacheControlScope["Private"] = "PRIVATE";
+    CacheControlScope["Public"] = "PUBLIC";
+})(CacheControlScope || (CacheControlScope = {}));
 export var CacheScope;
 (function (CacheScope) {
     CacheScope["Private"] = "PRIVATE";
@@ -341,13 +407,21 @@ export var ChangeType;
     ChangeType["Failure"] = "FAILURE";
     ChangeType["Notice"] = "NOTICE";
 })(ChangeType || (ChangeType = {}));
-/** Options for filtering CheckWorkflows by status */
+/**
+ * Options for filtering CheckWorkflows by status
+ * This should always match CheckWorkflowStatus
+ */
 export var CheckFilterInputStatusOption;
 (function (CheckFilterInputStatusOption) {
     CheckFilterInputStatusOption["Failed"] = "FAILED";
     CheckFilterInputStatusOption["Passed"] = "PASSED";
     CheckFilterInputStatusOption["Pending"] = "PENDING";
 })(CheckFilterInputStatusOption || (CheckFilterInputStatusOption = {}));
+export var CheckStepStatus;
+(function (CheckStepStatus) {
+    CheckStepStatus["Failure"] = "FAILURE";
+    CheckStepStatus["Success"] = "SUCCESS";
+})(CheckStepStatus || (CheckStepStatus = {}));
 export var CheckWorkflowStatus;
 (function (CheckWorkflowStatus) {
     CheckWorkflowStatus["Failed"] = "FAILED";
@@ -361,6 +435,31 @@ export var CheckWorkflowTaskStatus;
     CheckWorkflowTaskStatus["Passed"] = "PASSED";
     CheckWorkflowTaskStatus["Pending"] = "PENDING";
 })(CheckWorkflowTaskStatus || (CheckWorkflowTaskStatus = {}));
+/** List of supported cloud providers */
+export var CloudProvider;
+(function (CloudProvider) {
+    CloudProvider["Aws"] = "AWS";
+    CloudProvider["Fly"] = "FLY";
+})(CloudProvider || (CloudProvider = {}));
+/** Cloud Router tiers */
+export var CloudTier;
+(function (CloudTier) {
+    CloudTier["Dedicated"] = "DEDICATED";
+    CloudTier["Enterprise"] = "ENTERPRISE";
+    CloudTier["Serverless"] = "SERVERLESS";
+})(CloudTier || (CloudTier = {}));
+export var CommentStatus;
+(function (CommentStatus) {
+    CommentStatus["Deleted"] = "DELETED";
+    CommentStatus["Open"] = "OPEN";
+    CommentStatus["Resolved"] = "RESOLVED";
+})(CommentStatus || (CommentStatus = {}));
+export var CommentType;
+(function (CommentType) {
+    CommentType["Change"] = "CHANGE";
+    CommentType["General"] = "GENERAL";
+    CommentType["Review"] = "REVIEW";
+})(CommentType || (CommentType = {}));
 export var ComparisonOperator;
 (function (ComparisonOperator) {
     ComparisonOperator["Equals"] = "EQUALS";
@@ -374,6 +473,7 @@ export var ComparisonOperator;
 export var ContractVariantFailedStep;
 (function (ContractVariantFailedStep) {
     ContractVariantFailedStep["AddDirectiveDefinitionsIfNotPresent"] = "ADD_DIRECTIVE_DEFINITIONS_IF_NOT_PRESENT";
+    ContractVariantFailedStep["AddInaccessibleSpecPurpose"] = "ADD_INACCESSIBLE_SPEC_PURPOSE";
     ContractVariantFailedStep["DirectiveDefinitionLocationAugmenting"] = "DIRECTIVE_DEFINITION_LOCATION_AUGMENTING";
     ContractVariantFailedStep["EmptyEnumMasking"] = "EMPTY_ENUM_MASKING";
     ContractVariantFailedStep["EmptyInputObjectMasking"] = "EMPTY_INPUT_OBJECT_MASKING";
@@ -390,6 +490,7 @@ export var ContractVariantFailedStep;
     ContractVariantFailedStep["ToApiSchema"] = "TO_API_SCHEMA";
     ContractVariantFailedStep["ToFilterSchema"] = "TO_FILTER_SCHEMA";
     ContractVariantFailedStep["Unknown"] = "UNKNOWN";
+    ContractVariantFailedStep["UnreachableTypeMasking"] = "UNREACHABLE_TYPE_MASKING";
     ContractVariantFailedStep["VersionCheck"] = "VERSION_CHECK";
 })(ContractVariantFailedStep || (ContractVariantFailedStep = {}));
 export var DatadogApiRegion;
@@ -448,6 +549,28 @@ export var EventEnum;
     EventEnum["ClickGoToGraphSettings"] = "CLICK_GO_TO_GRAPH_SETTINGS";
     EventEnum["RunExplorerOperation"] = "RUN_EXPLORER_OPERATION";
 })(EventEnum || (EventEnum = {}));
+/** Columns of FieldExecutions. */
+export var FieldExecutionsColumn;
+(function (FieldExecutionsColumn) {
+    FieldExecutionsColumn["ErrorsCount"] = "ERRORS_COUNT";
+    FieldExecutionsColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
+    FieldExecutionsColumn["FieldName"] = "FIELD_NAME";
+    FieldExecutionsColumn["ObservedExecutionCount"] = "OBSERVED_EXECUTION_COUNT";
+    FieldExecutionsColumn["ParentType"] = "PARENT_TYPE";
+    FieldExecutionsColumn["ReferencingOperationCount"] = "REFERENCING_OPERATION_COUNT";
+    FieldExecutionsColumn["RequestsWithErrorsCount"] = "REQUESTS_WITH_ERRORS_COUNT";
+    FieldExecutionsColumn["SchemaTag"] = "SCHEMA_TAG";
+    FieldExecutionsColumn["ServiceId"] = "SERVICE_ID";
+    FieldExecutionsColumn["Timestamp"] = "TIMESTAMP";
+})(FieldExecutionsColumn || (FieldExecutionsColumn = {}));
+export var FieldInsightsListOrderByColumn;
+(function (FieldInsightsListOrderByColumn) {
+    FieldInsightsListOrderByColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
+    FieldInsightsListOrderByColumn["ExecutionCount"] = "EXECUTION_COUNT";
+    FieldInsightsListOrderByColumn["ParentTypeAndFieldName"] = "PARENT_TYPE_AND_FIELD_NAME";
+    FieldInsightsListOrderByColumn["ReferencingOperationCount"] = "REFERENCING_OPERATION_COUNT";
+    FieldInsightsListOrderByColumn["ReferencingOperationCountPerMin"] = "REFERENCING_OPERATION_COUNT_PER_MIN";
+})(FieldInsightsListOrderByColumn || (FieldInsightsListOrderByColumn = {}));
 /** Columns of FieldLatencies. */
 export var FieldLatenciesColumn;
 (function (FieldLatenciesColumn) {
@@ -467,6 +590,8 @@ export var FieldUsageColumn;
     FieldUsageColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
     FieldUsageColumn["ExecutionCount"] = "EXECUTION_COUNT";
     FieldUsageColumn["FieldName"] = "FIELD_NAME";
+    FieldUsageColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    FieldUsageColumn["OperationType"] = "OPERATION_TYPE";
     FieldUsageColumn["ParentType"] = "PARENT_TYPE";
     FieldUsageColumn["QueryId"] = "QUERY_ID";
     FieldUsageColumn["QueryName"] = "QUERY_NAME";
@@ -476,12 +601,76 @@ export var FieldUsageColumn;
     FieldUsageColumn["ServiceId"] = "SERVICE_ID";
     FieldUsageColumn["Timestamp"] = "TIMESTAMP";
 })(FieldUsageColumn || (FieldUsageColumn = {}));
+export var FlatDiffType;
+(function (FlatDiffType) {
+    FlatDiffType["AddArgument"] = "ADD_ARGUMENT";
+    FlatDiffType["AddDirective"] = "ADD_DIRECTIVE";
+    FlatDiffType["AddDirectiveUsage"] = "ADD_DIRECTIVE_USAGE";
+    FlatDiffType["AddEnum"] = "ADD_ENUM";
+    FlatDiffType["AddEnumValue"] = "ADD_ENUM_VALUE";
+    FlatDiffType["AddField"] = "ADD_FIELD";
+    FlatDiffType["AddImplementation"] = "ADD_IMPLEMENTATION";
+    FlatDiffType["AddInput"] = "ADD_INPUT";
+    FlatDiffType["AddInterface"] = "ADD_INTERFACE";
+    FlatDiffType["AddObject"] = "ADD_OBJECT";
+    FlatDiffType["AddScalar"] = "ADD_SCALAR";
+    FlatDiffType["AddSchemaDefinition"] = "ADD_SCHEMA_DEFINITION";
+    FlatDiffType["AddSchemaDirectiveUsage"] = "ADD_SCHEMA_DIRECTIVE_USAGE";
+    FlatDiffType["AddSchemaRootOperation"] = "ADD_SCHEMA_ROOT_OPERATION";
+    FlatDiffType["AddUnion"] = "ADD_UNION";
+    FlatDiffType["AddUnionMember"] = "ADD_UNION_MEMBER";
+    FlatDiffType["AddValidLocation"] = "ADD_VALID_LOCATION";
+    FlatDiffType["ChangeArgumentDefault"] = "CHANGE_ARGUMENT_DEFAULT";
+    FlatDiffType["ChangeDescription"] = "CHANGE_DESCRIPTION";
+    FlatDiffType["ChangeInputFieldDefault"] = "CHANGE_INPUT_FIELD_DEFAULT";
+    FlatDiffType["ChangeRepeatable"] = "CHANGE_REPEATABLE";
+    FlatDiffType["ChangeSchemaDescription"] = "CHANGE_SCHEMA_DESCRIPTION";
+    FlatDiffType["RemoveArgument"] = "REMOVE_ARGUMENT";
+    FlatDiffType["RemoveDirective"] = "REMOVE_DIRECTIVE";
+    FlatDiffType["RemoveDirectiveUsage"] = "REMOVE_DIRECTIVE_USAGE";
+    FlatDiffType["RemoveEnum"] = "REMOVE_ENUM";
+    FlatDiffType["RemoveEnumValue"] = "REMOVE_ENUM_VALUE";
+    FlatDiffType["RemoveField"] = "REMOVE_FIELD";
+    FlatDiffType["RemoveImplementation"] = "REMOVE_IMPLEMENTATION";
+    FlatDiffType["RemoveInput"] = "REMOVE_INPUT";
+    FlatDiffType["RemoveInterface"] = "REMOVE_INTERFACE";
+    FlatDiffType["RemoveObject"] = "REMOVE_OBJECT";
+    FlatDiffType["RemoveScalar"] = "REMOVE_SCALAR";
+    FlatDiffType["RemoveSchemaDefinition"] = "REMOVE_SCHEMA_DEFINITION";
+    FlatDiffType["RemoveSchemaDirectiveUsage"] = "REMOVE_SCHEMA_DIRECTIVE_USAGE";
+    FlatDiffType["RemoveSchemaRootOperation"] = "REMOVE_SCHEMA_ROOT_OPERATION";
+    FlatDiffType["RemoveUnion"] = "REMOVE_UNION";
+    FlatDiffType["RemoveUnionMember"] = "REMOVE_UNION_MEMBER";
+    FlatDiffType["RemoveValidLocation"] = "REMOVE_VALID_LOCATION";
+})(FlatDiffType || (FlatDiffType = {}));
 export var GitRemoteHost;
 (function (GitRemoteHost) {
     GitRemoteHost["Bitbucket"] = "BITBUCKET";
     GitRemoteHost["Github"] = "GITHUB";
     GitRemoteHost["Gitlab"] = "GITLAB";
 })(GitRemoteHost || (GitRemoteHost = {}));
+/** Various states a graph can be in. */
+export var GraphState;
+(function (GraphState) {
+    /** The graph has not been configured with any variants. */
+    GraphState["Configured"] = "CONFIGURED";
+    /** The graph has not been configured with any variants. */
+    GraphState["NotConfigured"] = "NOT_CONFIGURED";
+})(GraphState || (GraphState = {}));
+export var GraphType;
+(function (GraphType) {
+    GraphType["Classic"] = "CLASSIC";
+    GraphType["CloudSupergraph"] = "CLOUD_SUPERGRAPH";
+    GraphType["SelfHostedSupergraph"] = "SELF_HOSTED_SUPERGRAPH";
+})(GraphType || (GraphType = {}));
+/** Ways to filter graph variants. */
+export var GraphVariantFilter;
+(function (GraphVariantFilter) {
+    /** All Variants */
+    GraphVariantFilter["All"] = "ALL";
+    /** Variants favorited by the current user */
+    GraphVariantFilter["Favorites"] = "FAVORITES";
+})(GraphVariantFilter || (GraphVariantFilter = {}));
 export var HttpMethod;
 (function (HttpMethod) {
     HttpMethod["Connect"] = "CONNECT";
@@ -574,15 +763,13 @@ export var InvoiceState;
     InvoiceState["Open"] = "OPEN";
     InvoiceState["PastDue"] = "PAST_DUE";
     InvoiceState["Unknown"] = "UNKNOWN";
+    InvoiceState["Void"] = "VOID";
 })(InvoiceState || (InvoiceState = {}));
-export var InvoiceStateV2;
-(function (InvoiceStateV2) {
-    InvoiceStateV2["Collected"] = "COLLECTED";
-    InvoiceStateV2["Failed"] = "FAILED";
-    InvoiceStateV2["Open"] = "OPEN";
-    InvoiceStateV2["PastDue"] = "PAST_DUE";
-    InvoiceStateV2["Unknown"] = "UNKNOWN";
-})(InvoiceStateV2 || (InvoiceStateV2 = {}));
+export var LaunchHistoryOrder;
+(function (LaunchHistoryOrder) {
+    LaunchHistoryOrder["CreatedAsc"] = "CREATED_ASC";
+    LaunchHistoryOrder["CreatedDesc"] = "CREATED_DESC";
+})(LaunchHistoryOrder || (LaunchHistoryOrder = {}));
 export var LaunchStatus;
 (function (LaunchStatus) {
     LaunchStatus["LaunchCompleted"] = "LAUNCH_COMPLETED";
@@ -595,6 +782,46 @@ export var LinkInfoType;
     LinkInfoType["Other"] = "OTHER";
     LinkInfoType["Repository"] = "REPOSITORY";
 })(LinkInfoType || (LinkInfoType = {}));
+/** The severity level of an lint result. */
+export var LintDiagnosticLevel;
+(function (LintDiagnosticLevel) {
+    LintDiagnosticLevel["Error"] = "ERROR";
+    LintDiagnosticLevel["Ignored"] = "IGNORED";
+    LintDiagnosticLevel["Warning"] = "WARNING";
+})(LintDiagnosticLevel || (LintDiagnosticLevel = {}));
+export var LintRule;
+(function (LintRule) {
+    LintRule["ContactDirectiveMissing"] = "CONTACT_DIRECTIVE_MISSING";
+    LintRule["DeprecatedDirectiveMissingReason"] = "DEPRECATED_DIRECTIVE_MISSING_REASON";
+    LintRule["DirectiveNamesShouldBeCamelCase"] = "DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE";
+    LintRule["DoesNotParse"] = "DOES_NOT_PARSE";
+    LintRule["EnumPrefix"] = "ENUM_PREFIX";
+    LintRule["EnumSuffix"] = "ENUM_SUFFIX";
+    LintRule["EnumUsedAsInputWithoutSuffix"] = "ENUM_USED_AS_INPUT_WITHOUT_SUFFIX";
+    LintRule["EnumUsedAsOutputDespiteSuffix"] = "ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX";
+    LintRule["EnumValuesShouldBeScreamingSnakeCase"] = "ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE";
+    LintRule["FieldNamesShouldBeCamelCase"] = "FIELD_NAMES_SHOULD_BE_CAMEL_CASE";
+    LintRule["InputArgumentNamesShouldBeCamelCase"] = "INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE";
+    LintRule["InputTypeSuffix"] = "INPUT_TYPE_SUFFIX";
+    LintRule["InterfacePrefix"] = "INTERFACE_PREFIX";
+    LintRule["InterfaceSuffix"] = "INTERFACE_SUFFIX";
+    LintRule["ObjectPrefix"] = "OBJECT_PREFIX";
+    LintRule["ObjectSuffix"] = "OBJECT_SUFFIX";
+    LintRule["QueryDocumentDeclaration"] = "QUERY_DOCUMENT_DECLARATION";
+    LintRule["RestyFieldNames"] = "RESTY_FIELD_NAMES";
+    LintRule["TagDirectiveUsesUnknownName"] = "TAG_DIRECTIVE_USES_UNKNOWN_NAME";
+    LintRule["TypeNamesShouldBePascalCase"] = "TYPE_NAMES_SHOULD_BE_PASCAL_CASE";
+    LintRule["TypePrefix"] = "TYPE_PREFIX";
+    LintRule["TypeSuffix"] = "TYPE_SUFFIX";
+})(LintRule || (LintRule = {}));
+/** Level of the log entry */
+export var LogLevel;
+(function (LogLevel) {
+    LogLevel["Debug"] = "DEBUG";
+    LogLevel["Error"] = "ERROR";
+    LogLevel["Info"] = "INFO";
+    LogLevel["Warn"] = "WARN";
+})(LogLevel || (LogLevel = {}));
 export var OnboardingArchitecture;
 (function (OnboardingArchitecture) {
     OnboardingArchitecture["Monolith"] = "MONOLITH";
@@ -606,6 +833,8 @@ export var OperationCheckStatsColumn;
     OperationCheckStatsColumn["CachedRequestsCount"] = "CACHED_REQUESTS_COUNT";
     OperationCheckStatsColumn["ClientName"] = "CLIENT_NAME";
     OperationCheckStatsColumn["ClientVersion"] = "CLIENT_VERSION";
+    OperationCheckStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    OperationCheckStatsColumn["OperationType"] = "OPERATION_TYPE";
     OperationCheckStatsColumn["QueryId"] = "QUERY_ID";
     OperationCheckStatsColumn["QueryName"] = "QUERY_NAME";
     OperationCheckStatsColumn["SchemaTag"] = "SCHEMA_TAG";
@@ -613,6 +842,28 @@ export var OperationCheckStatsColumn;
     OperationCheckStatsColumn["Timestamp"] = "TIMESTAMP";
     OperationCheckStatsColumn["UncachedRequestsCount"] = "UNCACHED_REQUESTS_COUNT";
 })(OperationCheckStatsColumn || (OperationCheckStatsColumn = {}));
+export var OperationType;
+(function (OperationType) {
+    OperationType["Mutation"] = "MUTATION";
+    OperationType["Query"] = "QUERY";
+    OperationType["Subscription"] = "SUBSCRIPTION";
+})(OperationType || (OperationType = {}));
+/** Represents the different status for an order */
+export var OrderStatus;
+(function (OrderStatus) {
+    OrderStatus["Completed"] = "COMPLETED";
+    OrderStatus["Errored"] = "ERRORED";
+    OrderStatus["Pending"] = "PENDING";
+    OrderStatus["RollingBack"] = "ROLLING_BACK";
+    OrderStatus["Superseded"] = "SUPERSEDED";
+})(OrderStatus || (OrderStatus = {}));
+/** Represents the different types of order */
+export var OrderType;
+(function (OrderType) {
+    OrderType["CreateRouter"] = "CREATE_ROUTER";
+    OrderType["DestroyRouter"] = "DESTROY_ROUTER";
+    OrderType["UpdateRouter"] = "UPDATE_ROUTER";
+})(OrderType || (OrderType = {}));
 export var Ordering;
 (function (Ordering) {
     Ordering["Ascending"] = "ASCENDING";
@@ -631,6 +882,13 @@ export var PromoteSchemaResponseCode;
     PromoteSchemaResponseCode["NoChangesDetected"] = "NO_CHANGES_DETECTED";
     PromoteSchemaResponseCode["PromotionSuccess"] = "PROMOTION_SUCCESS";
 })(PromoteSchemaResponseCode || (PromoteSchemaResponseCode = {}));
+export var ProposalStatus;
+(function (ProposalStatus) {
+    ProposalStatus["Approved"] = "APPROVED";
+    ProposalStatus["Closed"] = "CLOSED";
+    ProposalStatus["Draft"] = "DRAFT";
+    ProposalStatus["Open"] = "OPEN";
+})(ProposalStatus || (ProposalStatus = {}));
 /** Columns of QueryStats. */
 export var QueryStatsColumn;
 (function (QueryStatsColumn) {
@@ -642,6 +900,8 @@ export var QueryStatsColumn;
     QueryStatsColumn["ClientVersion"] = "CLIENT_VERSION";
     QueryStatsColumn["ForbiddenOperationCount"] = "FORBIDDEN_OPERATION_COUNT";
     QueryStatsColumn["FromEngineproxy"] = "FROM_ENGINEPROXY";
+    QueryStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    QueryStatsColumn["OperationType"] = "OPERATION_TYPE";
     QueryStatsColumn["QueryId"] = "QUERY_ID";
     QueryStatsColumn["QueryName"] = "QUERY_NAME";
     QueryStatsColumn["RegisteredOperationCount"] = "REGISTERED_OPERATION_COUNT";
@@ -677,6 +937,19 @@ export var QueryTriggerWindow;
     QueryTriggerWindow["OneMinute"] = "ONE_MINUTE";
     QueryTriggerWindow["Unrecognized"] = "UNRECOGNIZED";
 })(QueryTriggerWindow || (QueryTriggerWindow = {}));
+/** Responsibility for an errored order */
+export var ReasonCause;
+(function (ReasonCause) {
+    ReasonCause["Internal"] = "INTERNAL";
+    ReasonCause["User"] = "USER";
+})(ReasonCause || (ReasonCause = {}));
+/** Possible state of a region */
+export var RegionState;
+(function (RegionState) {
+    RegionState["Active"] = "ACTIVE";
+    RegionState["Hidden"] = "HIDDEN";
+    RegionState["Inactive"] = "INACTIVE";
+})(RegionState || (RegionState = {}));
 export var ReportSchemaErrorCode;
 (function (ReportSchemaErrorCode) {
     ReportSchemaErrorCode["BootIdIsNotValidUuid"] = "BOOT_ID_IS_NOT_VALID_UUID";
@@ -716,11 +989,40 @@ export var ResponseHints;
     ResponseHints["Timings"] = "TIMINGS";
     ResponseHints["TraceTimings"] = "TRACE_TIMINGS";
 })(ResponseHints || (ResponseHints = {}));
+export var ReviewDecision;
+(function (ReviewDecision) {
+    ReviewDecision["Approved"] = "APPROVED";
+    ReviewDecision["NotApproved"] = "NOT_APPROVED";
+})(ReviewDecision || (ReviewDecision = {}));
+export var RouterEntitlementAudience;
+(function (RouterEntitlementAudience) {
+    RouterEntitlementAudience["Cloud"] = "CLOUD";
+    RouterEntitlementAudience["SelfHosted"] = "SELF_HOSTED";
+})(RouterEntitlementAudience || (RouterEntitlementAudience = {}));
+/** Current status of Cloud Routers */
+export var RouterStatus;
+(function (RouterStatus) {
+    RouterStatus["Creating"] = "CREATING";
+    RouterStatus["Deleted"] = "DELETED";
+    RouterStatus["Deleting"] = "DELETING";
+    RouterStatus["RollingBack"] = "ROLLING_BACK";
+    RouterStatus["Running"] = "RUNNING";
+    RouterStatus["Updating"] = "UPDATING";
+})(RouterStatus || (RouterStatus = {}));
+export var SchemaTagHistoryOrder;
+(function (SchemaTagHistoryOrder) {
+    SchemaTagHistoryOrder["CreatedAsc"] = "CREATED_ASC";
+    SchemaTagHistoryOrder["CreatedDesc"] = "CREATED_DESC";
+})(SchemaTagHistoryOrder || (SchemaTagHistoryOrder = {}));
 /** Columns of ServiceBillingUsageStats. */
 export var ServiceBillingUsageStatsColumn;
 (function (ServiceBillingUsageStatsColumn) {
+    ServiceBillingUsageStatsColumn["AgentVersion"] = "AGENT_VERSION";
+    ServiceBillingUsageStatsColumn["GraphDeploymentType"] = "GRAPH_DEPLOYMENT_TYPE";
     ServiceBillingUsageStatsColumn["OperationCount"] = "OPERATION_COUNT";
     ServiceBillingUsageStatsColumn["OperationCountProvidedExplicitly"] = "OPERATION_COUNT_PROVIDED_EXPLICITLY";
+    ServiceBillingUsageStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    ServiceBillingUsageStatsColumn["OperationType"] = "OPERATION_TYPE";
     ServiceBillingUsageStatsColumn["SchemaTag"] = "SCHEMA_TAG";
     ServiceBillingUsageStatsColumn["Timestamp"] = "TIMESTAMP";
 })(ServiceBillingUsageStatsColumn || (ServiceBillingUsageStatsColumn = {}));
@@ -751,6 +1053,19 @@ export var ServiceErrorStatsColumn;
     ServiceErrorStatsColumn["SchemaTag"] = "SCHEMA_TAG";
     ServiceErrorStatsColumn["Timestamp"] = "TIMESTAMP";
 })(ServiceErrorStatsColumn || (ServiceErrorStatsColumn = {}));
+/** Columns of ServiceFieldExecutions. */
+export var ServiceFieldExecutionsColumn;
+(function (ServiceFieldExecutionsColumn) {
+    ServiceFieldExecutionsColumn["ErrorsCount"] = "ERRORS_COUNT";
+    ServiceFieldExecutionsColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
+    ServiceFieldExecutionsColumn["FieldName"] = "FIELD_NAME";
+    ServiceFieldExecutionsColumn["ObservedExecutionCount"] = "OBSERVED_EXECUTION_COUNT";
+    ServiceFieldExecutionsColumn["ParentType"] = "PARENT_TYPE";
+    ServiceFieldExecutionsColumn["ReferencingOperationCount"] = "REFERENCING_OPERATION_COUNT";
+    ServiceFieldExecutionsColumn["RequestsWithErrorsCount"] = "REQUESTS_WITH_ERRORS_COUNT";
+    ServiceFieldExecutionsColumn["SchemaTag"] = "SCHEMA_TAG";
+    ServiceFieldExecutionsColumn["Timestamp"] = "TIMESTAMP";
+})(ServiceFieldExecutionsColumn || (ServiceFieldExecutionsColumn = {}));
 /** Columns of ServiceFieldLatencies. */
 export var ServiceFieldLatenciesColumn;
 (function (ServiceFieldLatenciesColumn) {
@@ -769,6 +1084,8 @@ export var ServiceFieldUsageColumn;
     ServiceFieldUsageColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
     ServiceFieldUsageColumn["ExecutionCount"] = "EXECUTION_COUNT";
     ServiceFieldUsageColumn["FieldName"] = "FIELD_NAME";
+    ServiceFieldUsageColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    ServiceFieldUsageColumn["OperationType"] = "OPERATION_TYPE";
     ServiceFieldUsageColumn["ParentType"] = "PARENT_TYPE";
     ServiceFieldUsageColumn["QueryId"] = "QUERY_ID";
     ServiceFieldUsageColumn["QueryName"] = "QUERY_NAME";
@@ -783,6 +1100,8 @@ export var ServiceOperationCheckStatsColumn;
     ServiceOperationCheckStatsColumn["CachedRequestsCount"] = "CACHED_REQUESTS_COUNT";
     ServiceOperationCheckStatsColumn["ClientName"] = "CLIENT_NAME";
     ServiceOperationCheckStatsColumn["ClientVersion"] = "CLIENT_VERSION";
+    ServiceOperationCheckStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    ServiceOperationCheckStatsColumn["OperationType"] = "OPERATION_TYPE";
     ServiceOperationCheckStatsColumn["QueryId"] = "QUERY_ID";
     ServiceOperationCheckStatsColumn["QueryName"] = "QUERY_NAME";
     ServiceOperationCheckStatsColumn["SchemaTag"] = "SCHEMA_TAG";
@@ -799,6 +1118,8 @@ export var ServiceQueryStatsColumn;
     ServiceQueryStatsColumn["ClientVersion"] = "CLIENT_VERSION";
     ServiceQueryStatsColumn["ForbiddenOperationCount"] = "FORBIDDEN_OPERATION_COUNT";
     ServiceQueryStatsColumn["FromEngineproxy"] = "FROM_ENGINEPROXY";
+    ServiceQueryStatsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    ServiceQueryStatsColumn["OperationType"] = "OPERATION_TYPE";
     ServiceQueryStatsColumn["QueryId"] = "QUERY_ID";
     ServiceQueryStatsColumn["QueryName"] = "QUERY_NAME";
     ServiceQueryStatsColumn["RegisteredOperationCount"] = "REGISTERED_OPERATION_COUNT";
@@ -835,15 +1156,46 @@ export var ServiceTraceRefsColumn;
     ServiceTraceRefsColumn["ClientName"] = "CLIENT_NAME";
     ServiceTraceRefsColumn["ClientVersion"] = "CLIENT_VERSION";
     ServiceTraceRefsColumn["DurationBucket"] = "DURATION_BUCKET";
-    ServiceTraceRefsColumn["DurationNs"] = "DURATION_NS";
+    ServiceTraceRefsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    ServiceTraceRefsColumn["OperationType"] = "OPERATION_TYPE";
     ServiceTraceRefsColumn["QueryId"] = "QUERY_ID";
     ServiceTraceRefsColumn["QueryName"] = "QUERY_NAME";
     ServiceTraceRefsColumn["SchemaHash"] = "SCHEMA_HASH";
     ServiceTraceRefsColumn["SchemaTag"] = "SCHEMA_TAG";
     ServiceTraceRefsColumn["Timestamp"] = "TIMESTAMP";
+    ServiceTraceRefsColumn["TraceCount"] = "TRACE_COUNT";
     ServiceTraceRefsColumn["TraceId"] = "TRACE_ID";
-    ServiceTraceRefsColumn["TraceSizeBytes"] = "TRACE_SIZE_BYTES";
 })(ServiceTraceRefsColumn || (ServiceTraceRefsColumn = {}));
+/** Current status of [`Shard`]s */
+export var ShardStatus;
+(function (ShardStatus) {
+    ShardStatus["Active"] = "ACTIVE";
+    ShardStatus["Deleted"] = "DELETED";
+    ShardStatus["Deprecated"] = "DEPRECATED";
+    ShardStatus["Impaired"] = "IMPAIRED";
+    ShardStatus["Updating"] = "UPDATING";
+})(ShardStatus || (ShardStatus = {}));
+export var SlackPublishState;
+(function (SlackPublishState) {
+    SlackPublishState["Errored"] = "errored";
+    SlackPublishState["Published"] = "published";
+    SlackPublishState["Recalled"] = "recalled";
+})(SlackPublishState || (SlackPublishState = {}));
+export var State;
+(function (State) {
+    State["Approved"] = "approved";
+    State["Denied"] = "denied";
+    State["Errored"] = "errored";
+    State["Pending"] = "pending";
+    State["Published"] = "published";
+})(State || (State = {}));
+/** Possible status of a Cloud Router version */
+export var Status;
+(function (Status) {
+    Status["Deprecated"] = "DEPRECATED";
+    Status["Next"] = "NEXT";
+    Status["Stable"] = "STABLE";
+})(Status || (Status = {}));
 export var StoreSchemaErrorCode;
 (function (StoreSchemaErrorCode) {
     StoreSchemaErrorCode["SchemaIsNotParsable"] = "SCHEMA_IS_NOT_PARSABLE";
@@ -866,17 +1218,6 @@ export var SubscriptionState;
     SubscriptionState["Pending"] = "PENDING";
     SubscriptionState["Unknown"] = "UNKNOWN";
 })(SubscriptionState || (SubscriptionState = {}));
-export var SubscriptionStateV2;
-(function (SubscriptionStateV2) {
-    SubscriptionStateV2["Active"] = "ACTIVE";
-    SubscriptionStateV2["Canceled"] = "CANCELED";
-    SubscriptionStateV2["Expired"] = "EXPIRED";
-    SubscriptionStateV2["Future"] = "FUTURE";
-    SubscriptionStateV2["PastDue"] = "PAST_DUE";
-    SubscriptionStateV2["Paused"] = "PAUSED";
-    SubscriptionStateV2["Pending"] = "PENDING";
-    SubscriptionStateV2["Unknown"] = "UNKNOWN";
-})(SubscriptionStateV2 || (SubscriptionStateV2 = {}));
 export var ThemeName;
 (function (ThemeName) {
     ThemeName["Dark"] = "DARK";
@@ -925,15 +1266,16 @@ export var TraceRefsColumn;
     TraceRefsColumn["ClientName"] = "CLIENT_NAME";
     TraceRefsColumn["ClientVersion"] = "CLIENT_VERSION";
     TraceRefsColumn["DurationBucket"] = "DURATION_BUCKET";
-    TraceRefsColumn["DurationNs"] = "DURATION_NS";
+    TraceRefsColumn["OperationSubtype"] = "OPERATION_SUBTYPE";
+    TraceRefsColumn["OperationType"] = "OPERATION_TYPE";
     TraceRefsColumn["QueryId"] = "QUERY_ID";
     TraceRefsColumn["QueryName"] = "QUERY_NAME";
     TraceRefsColumn["SchemaHash"] = "SCHEMA_HASH";
     TraceRefsColumn["SchemaTag"] = "SCHEMA_TAG";
     TraceRefsColumn["ServiceId"] = "SERVICE_ID";
     TraceRefsColumn["Timestamp"] = "TIMESTAMP";
+    TraceRefsColumn["TraceCount"] = "TRACE_COUNT";
     TraceRefsColumn["TraceId"] = "TRACE_ID";
-    TraceRefsColumn["TraceSizeBytes"] = "TRACE_SIZE_BYTES";
 })(TraceRefsColumn || (TraceRefsColumn = {}));
 export var UserPermission;
 (function (UserPermission) {
@@ -945,15 +1287,18 @@ export var UserPermission;
     UserPermission["LegacyGraphKey"] = "LEGACY_GRAPH_KEY";
     UserPermission["Observer"] = "OBSERVER";
     UserPermission["OrgAdmin"] = "ORG_ADMIN";
+    UserPermission["PersistedQueryPublisher"] = "PERSISTED_QUERY_PUBLISHER";
 })(UserPermission || (UserPermission = {}));
 export var UserSegment;
 (function (UserSegment) {
     UserSegment["JoinMyTeam"] = "JOIN_MY_TEAM";
     UserSegment["LocalDevelopment"] = "LOCAL_DEVELOPMENT";
     UserSegment["NotSpecified"] = "NOT_SPECIFIED";
+    UserSegment["Odyssey"] = "ODYSSEY";
     UserSegment["ProductionGraphs"] = "PRODUCTION_GRAPHS";
     UserSegment["Sandbox"] = "SANDBOX";
     UserSegment["SandboxOperationCollections"] = "SANDBOX_OPERATION_COLLECTIONS";
+    UserSegment["SandboxPreflightScripts"] = "SANDBOX_PREFLIGHT_SCRIPTS";
     UserSegment["TryTeam"] = "TRY_TEAM";
 })(UserSegment || (UserSegment = {}));
 export var UserType;
