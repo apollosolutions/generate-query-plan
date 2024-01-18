@@ -85,6 +85,21 @@ export var AccountFieldUsageColumn;
     AccountFieldUsageColumn["ServiceId"] = "SERVICE_ID";
     AccountFieldUsageColumn["Timestamp"] = "TIMESTAMP";
 })(AccountFieldUsageColumn || (AccountFieldUsageColumn = {}));
+/** Columns of AccountGraphosCloudMetrics. */
+export var AccountGraphosCloudMetricsColumn;
+(function (AccountGraphosCloudMetricsColumn) {
+    AccountGraphosCloudMetricsColumn["AgentVersion"] = "AGENT_VERSION";
+    AccountGraphosCloudMetricsColumn["ResponseSize"] = "RESPONSE_SIZE";
+    AccountGraphosCloudMetricsColumn["ResponseSizeThrottled"] = "RESPONSE_SIZE_THROTTLED";
+    AccountGraphosCloudMetricsColumn["RouterId"] = "ROUTER_ID";
+    AccountGraphosCloudMetricsColumn["RouterOperations"] = "ROUTER_OPERATIONS";
+    AccountGraphosCloudMetricsColumn["RouterOperationsThrottled"] = "ROUTER_OPERATIONS_THROTTLED";
+    AccountGraphosCloudMetricsColumn["SchemaTag"] = "SCHEMA_TAG";
+    AccountGraphosCloudMetricsColumn["ServiceId"] = "SERVICE_ID";
+    AccountGraphosCloudMetricsColumn["SubgraphFetches"] = "SUBGRAPH_FETCHES";
+    AccountGraphosCloudMetricsColumn["SubgraphFetchesThrottled"] = "SUBGRAPH_FETCHES_THROTTLED";
+    AccountGraphosCloudMetricsColumn["Timestamp"] = "TIMESTAMP";
+})(AccountGraphosCloudMetricsColumn || (AccountGraphosCloudMetricsColumn = {}));
 export var AccountLockType;
 (function (AccountLockType) {
     AccountLockType["AutomatedTrialEnd"] = "AUTOMATED_TRIAL_END";
@@ -225,6 +240,7 @@ export var BillingPeriod;
 export var BillingPlanKind;
 (function (BillingPlanKind) {
     BillingPlanKind["Community"] = "COMMUNITY";
+    BillingPlanKind["Dedicated"] = "DEDICATED";
     BillingPlanKind["EnterpriseInternal"] = "ENTERPRISE_INTERNAL";
     BillingPlanKind["EnterprisePaid"] = "ENTERPRISE_PAID";
     BillingPlanKind["EnterprisePilot"] = "ENTERPRISE_PILOT";
@@ -278,6 +294,7 @@ export var BuildPipelineTrack;
     BuildPipelineTrack["Fed_2_3"] = "FED_2_3";
     BuildPipelineTrack["Fed_2_4"] = "FED_2_4";
     BuildPipelineTrack["Fed_2_5"] = "FED_2_5";
+    BuildPipelineTrack["Fed_2_6"] = "FED_2_6";
 })(BuildPipelineTrack || (BuildPipelineTrack = {}));
 export var BuildPipelineTrackBadge;
 (function (BuildPipelineTrackBadge) {
@@ -438,14 +455,19 @@ export var CheckWorkflowTaskStatus;
 /** List of supported cloud providers */
 export var CloudProvider;
 (function (CloudProvider) {
+    /** Amazon Web Services */
     CloudProvider["Aws"] = "AWS";
+    /** Fly.io */
     CloudProvider["Fly"] = "FLY";
 })(CloudProvider || (CloudProvider = {}));
 /** Cloud Router tiers */
 export var CloudTier;
 (function (CloudTier) {
+    /** Dedicated tier */
     CloudTier["Dedicated"] = "DEDICATED";
+    /** Enterprise Cloud tier */
     CloudTier["Enterprise"] = "ENTERPRISE";
+    /** Serverless tier */
     CloudTier["Serverless"] = "SERVERLESS";
 })(CloudTier || (CloudTier = {}));
 export var CommentStatus;
@@ -508,6 +530,21 @@ export var DeletionTargetType;
     DeletionTargetType["Account"] = "ACCOUNT";
     DeletionTargetType["User"] = "USER";
 })(DeletionTargetType || (DeletionTargetType = {}));
+export var DownstreamLaunchInitiation;
+(function (DownstreamLaunchInitiation) {
+    /**
+     * Initiate the creation of downstream launches associated with this subgraph publication asynchronously.
+     * The resulting API response may not provide specific details about triggered downstream launches.
+     */
+    DownstreamLaunchInitiation["Async"] = "ASYNC";
+    /**
+     * Initiate the creation of downstream Launches associated with this subgraph publication synchronously.
+     * Use this option to ensure that any downstream launches will be started before the publish mutation returns.
+     * Note that this does not require launches to complete, but it does ensure that the downstream launch IDs are
+     * available to be queried from a `CompositionAndUpsertResult`.
+     */
+    DownstreamLaunchInitiation["Sync"] = "SYNC";
+})(DownstreamLaunchInitiation || (DownstreamLaunchInitiation = {}));
 /** Columns of EdgeServerInfos. */
 export var EdgeServerInfosColumn;
 (function (EdgeServerInfosColumn) {
@@ -565,11 +602,18 @@ export var FieldExecutionsColumn;
 })(FieldExecutionsColumn || (FieldExecutionsColumn = {}));
 export var FieldInsightsListOrderByColumn;
 (function (FieldInsightsListOrderByColumn) {
+    FieldInsightsListOrderByColumn["ErrorCount"] = "ERROR_COUNT";
+    FieldInsightsListOrderByColumn["ErrorCountPerMin"] = "ERROR_COUNT_PER_MIN";
+    FieldInsightsListOrderByColumn["ErrorPercentage"] = "ERROR_PERCENTAGE";
     FieldInsightsListOrderByColumn["EstimatedExecutionCount"] = "ESTIMATED_EXECUTION_COUNT";
     FieldInsightsListOrderByColumn["ExecutionCount"] = "EXECUTION_COUNT";
     FieldInsightsListOrderByColumn["ParentTypeAndFieldName"] = "PARENT_TYPE_AND_FIELD_NAME";
     FieldInsightsListOrderByColumn["ReferencingOperationCount"] = "REFERENCING_OPERATION_COUNT";
     FieldInsightsListOrderByColumn["ReferencingOperationCountPerMin"] = "REFERENCING_OPERATION_COUNT_PER_MIN";
+    FieldInsightsListOrderByColumn["ServiceTimeP50"] = "SERVICE_TIME_P50";
+    FieldInsightsListOrderByColumn["ServiceTimeP90"] = "SERVICE_TIME_P90";
+    FieldInsightsListOrderByColumn["ServiceTimeP95"] = "SERVICE_TIME_P95";
+    FieldInsightsListOrderByColumn["ServiceTimeP99"] = "SERVICE_TIME_P99";
 })(FieldInsightsListOrderByColumn || (FieldInsightsListOrderByColumn = {}));
 /** Columns of FieldLatencies. */
 export var FieldLatenciesColumn;
@@ -671,6 +715,22 @@ export var GraphVariantFilter;
     /** Variants favorited by the current user */
     GraphVariantFilter["Favorites"] = "FAVORITES";
 })(GraphVariantFilter || (GraphVariantFilter = {}));
+/** Columns of GraphosCloudMetrics. */
+export var GraphosCloudMetricsColumn;
+(function (GraphosCloudMetricsColumn) {
+    GraphosCloudMetricsColumn["AccountId"] = "ACCOUNT_ID";
+    GraphosCloudMetricsColumn["AgentVersion"] = "AGENT_VERSION";
+    GraphosCloudMetricsColumn["ResponseSize"] = "RESPONSE_SIZE";
+    GraphosCloudMetricsColumn["ResponseSizeThrottled"] = "RESPONSE_SIZE_THROTTLED";
+    GraphosCloudMetricsColumn["RouterId"] = "ROUTER_ID";
+    GraphosCloudMetricsColumn["RouterOperations"] = "ROUTER_OPERATIONS";
+    GraphosCloudMetricsColumn["RouterOperationsThrottled"] = "ROUTER_OPERATIONS_THROTTLED";
+    GraphosCloudMetricsColumn["SchemaTag"] = "SCHEMA_TAG";
+    GraphosCloudMetricsColumn["ServiceId"] = "SERVICE_ID";
+    GraphosCloudMetricsColumn["SubgraphFetches"] = "SUBGRAPH_FETCHES";
+    GraphosCloudMetricsColumn["SubgraphFetchesThrottled"] = "SUBGRAPH_FETCHES_THROTTLED";
+    GraphosCloudMetricsColumn["Timestamp"] = "TIMESTAMP";
+})(GraphosCloudMetricsColumn || (GraphosCloudMetricsColumn = {}));
 export var HttpMethod;
 (function (HttpMethod) {
     HttpMethod["Connect"] = "CONNECT";
@@ -791,8 +851,11 @@ export var LintDiagnosticLevel;
 })(LintDiagnosticLevel || (LintDiagnosticLevel = {}));
 export var LintRule;
 (function (LintRule) {
+    LintRule["AllElementsRequireDescription"] = "ALL_ELEMENTS_REQUIRE_DESCRIPTION";
     LintRule["ContactDirectiveMissing"] = "CONTACT_DIRECTIVE_MISSING";
+    LintRule["DefinedTypesAreUnused"] = "DEFINED_TYPES_ARE_UNUSED";
     LintRule["DeprecatedDirectiveMissingReason"] = "DEPRECATED_DIRECTIVE_MISSING_REASON";
+    LintRule["DirectiveComposition"] = "DIRECTIVE_COMPOSITION";
     LintRule["DirectiveNamesShouldBeCamelCase"] = "DIRECTIVE_NAMES_SHOULD_BE_CAMEL_CASE";
     LintRule["DoesNotParse"] = "DOES_NOT_PARSE";
     LintRule["EnumPrefix"] = "ENUM_PREFIX";
@@ -801,27 +864,71 @@ export var LintRule;
     LintRule["EnumUsedAsOutputDespiteSuffix"] = "ENUM_USED_AS_OUTPUT_DESPITE_SUFFIX";
     LintRule["EnumValuesShouldBeScreamingSnakeCase"] = "ENUM_VALUES_SHOULD_BE_SCREAMING_SNAKE_CASE";
     LintRule["FieldNamesShouldBeCamelCase"] = "FIELD_NAMES_SHOULD_BE_CAMEL_CASE";
+    LintRule["FromSubgraphDoesNotExist"] = "FROM_SUBGRAPH_DOES_NOT_EXIST";
+    LintRule["InconsistentArgumentPresence"] = "INCONSISTENT_ARGUMENT_PRESENCE";
+    LintRule["InconsistentButCompatibleArgumentType"] = "INCONSISTENT_BUT_COMPATIBLE_ARGUMENT_TYPE";
+    LintRule["InconsistentButCompatibleFieldType"] = "INCONSISTENT_BUT_COMPATIBLE_FIELD_TYPE";
+    LintRule["InconsistentDefaultValuePresence"] = "INCONSISTENT_DEFAULT_VALUE_PRESENCE";
+    LintRule["InconsistentDescription"] = "INCONSISTENT_DESCRIPTION";
+    LintRule["InconsistentEntity"] = "INCONSISTENT_ENTITY";
+    LintRule["InconsistentEnumValueForInputEnum"] = "INCONSISTENT_ENUM_VALUE_FOR_INPUT_ENUM";
+    LintRule["InconsistentEnumValueForOutputEnum"] = "INCONSISTENT_ENUM_VALUE_FOR_OUTPUT_ENUM";
+    LintRule["InconsistentExecutableDirectiveLocations"] = "INCONSISTENT_EXECUTABLE_DIRECTIVE_LOCATIONS";
+    LintRule["InconsistentExecutableDirectivePresence"] = "INCONSISTENT_EXECUTABLE_DIRECTIVE_PRESENCE";
+    LintRule["InconsistentExecutableDirectiveRepeatable"] = "INCONSISTENT_EXECUTABLE_DIRECTIVE_REPEATABLE";
+    LintRule["InconsistentInputObjectField"] = "INCONSISTENT_INPUT_OBJECT_FIELD";
+    LintRule["InconsistentInterfaceValueTypeField"] = "INCONSISTENT_INTERFACE_VALUE_TYPE_FIELD";
+    LintRule["InconsistentNonRepeatableDirectiveArguments"] = "INCONSISTENT_NON_REPEATABLE_DIRECTIVE_ARGUMENTS";
+    LintRule["InconsistentObjectValueTypeField"] = "INCONSISTENT_OBJECT_VALUE_TYPE_FIELD";
+    LintRule["InconsistentRuntimeTypesForShareableReturn"] = "INCONSISTENT_RUNTIME_TYPES_FOR_SHAREABLE_RETURN";
+    LintRule["InconsistentTypeSystemDirectiveLocations"] = "INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_LOCATIONS";
+    LintRule["InconsistentTypeSystemDirectiveRepeatable"] = "INCONSISTENT_TYPE_SYSTEM_DIRECTIVE_REPEATABLE";
+    LintRule["InconsistentUnionMember"] = "INCONSISTENT_UNION_MEMBER";
     LintRule["InputArgumentNamesShouldBeCamelCase"] = "INPUT_ARGUMENT_NAMES_SHOULD_BE_CAMEL_CASE";
     LintRule["InputTypeSuffix"] = "INPUT_TYPE_SUFFIX";
     LintRule["InterfacePrefix"] = "INTERFACE_PREFIX";
     LintRule["InterfaceSuffix"] = "INTERFACE_SUFFIX";
+    LintRule["MergedNonRepeatableDirectiveArguments"] = "MERGED_NON_REPEATABLE_DIRECTIVE_ARGUMENTS";
+    LintRule["NoExecutableDirectiveIntersection"] = "NO_EXECUTABLE_DIRECTIVE_INTERSECTION";
     LintRule["ObjectPrefix"] = "OBJECT_PREFIX";
     LintRule["ObjectSuffix"] = "OBJECT_SUFFIX";
+    LintRule["OverriddenFieldCanBeRemoved"] = "OVERRIDDEN_FIELD_CAN_BE_REMOVED";
+    LintRule["OverrideDirectiveCanBeRemoved"] = "OVERRIDE_DIRECTIVE_CAN_BE_REMOVED";
     LintRule["QueryDocumentDeclaration"] = "QUERY_DOCUMENT_DECLARATION";
     LintRule["RestyFieldNames"] = "RESTY_FIELD_NAMES";
     LintRule["TagDirectiveUsesUnknownName"] = "TAG_DIRECTIVE_USES_UNKNOWN_NAME";
     LintRule["TypeNamesShouldBePascalCase"] = "TYPE_NAMES_SHOULD_BE_PASCAL_CASE";
     LintRule["TypePrefix"] = "TYPE_PREFIX";
     LintRule["TypeSuffix"] = "TYPE_SUFFIX";
+    LintRule["UnusedEnumType"] = "UNUSED_ENUM_TYPE";
 })(LintRule || (LintRule = {}));
+/** The category used for grouping similar rules. */
+export var LinterRuleCategory;
+(function (LinterRuleCategory) {
+    /** These rules are generated during composition. */
+    LinterRuleCategory["Composition"] = "COMPOSITION";
+    /** These rules enforce naming conventions. */
+    LinterRuleCategory["Naming"] = "NAMING";
+    /** These rules define conventions for the entire schema and directive usage outside of composition. */
+    LinterRuleCategory["Other"] = "OTHER";
+})(LinterRuleCategory || (LinterRuleCategory = {}));
 /** Level of the log entry */
 export var LogLevel;
 (function (LogLevel) {
+    /** Debug log entry */
     LogLevel["Debug"] = "DEBUG";
+    /** Error log entry */
     LogLevel["Error"] = "ERROR";
+    /** Informational log entry */
     LogLevel["Info"] = "INFO";
+    /** Warning log entry */
     LogLevel["Warn"] = "WARN";
 })(LogLevel || (LogLevel = {}));
+export var NotificationStatus;
+(function (NotificationStatus) {
+    NotificationStatus["All"] = "ALL";
+    NotificationStatus["None"] = "NONE";
+})(NotificationStatus || (NotificationStatus = {}));
 export var OnboardingArchitecture;
 (function (OnboardingArchitecture) {
     OnboardingArchitecture["Monolith"] = "MONOLITH";
@@ -842,6 +949,23 @@ export var OperationCheckStatsColumn;
     OperationCheckStatsColumn["Timestamp"] = "TIMESTAMP";
     OperationCheckStatsColumn["UncachedRequestsCount"] = "UNCACHED_REQUESTS_COUNT";
 })(OperationCheckStatsColumn || (OperationCheckStatsColumn = {}));
+export var OperationInsightsListOrderByColumn;
+(function (OperationInsightsListOrderByColumn) {
+    OperationInsightsListOrderByColumn["CacheHitRate"] = "CACHE_HIT_RATE";
+    OperationInsightsListOrderByColumn["CacheTtlP50"] = "CACHE_TTL_P50";
+    OperationInsightsListOrderByColumn["ErrorCount"] = "ERROR_COUNT";
+    OperationInsightsListOrderByColumn["ErrorCountPerMin"] = "ERROR_COUNT_PER_MIN";
+    OperationInsightsListOrderByColumn["ErrorPercentage"] = "ERROR_PERCENTAGE";
+    OperationInsightsListOrderByColumn["OperationName"] = "OPERATION_NAME";
+    OperationInsightsListOrderByColumn["RequestCount"] = "REQUEST_COUNT";
+    OperationInsightsListOrderByColumn["RequestCountPerMin"] = "REQUEST_COUNT_PER_MIN";
+    OperationInsightsListOrderByColumn["ServiceTimeP50"] = "SERVICE_TIME_P50";
+    OperationInsightsListOrderByColumn["ServiceTimeP90"] = "SERVICE_TIME_P90";
+    OperationInsightsListOrderByColumn["ServiceTimeP95"] = "SERVICE_TIME_P95";
+    OperationInsightsListOrderByColumn["ServiceTimeP99"] = "SERVICE_TIME_P99";
+    OperationInsightsListOrderByColumn["SignatureBytes"] = "SIGNATURE_BYTES";
+    OperationInsightsListOrderByColumn["TotalDurationMs"] = "TOTAL_DURATION_MS";
+})(OperationInsightsListOrderByColumn || (OperationInsightsListOrderByColumn = {}));
 export var OperationType;
 (function (OperationType) {
     OperationType["Mutation"] = "MUTATION";
@@ -851,17 +975,34 @@ export var OperationType;
 /** Represents the different status for an order */
 export var OrderStatus;
 (function (OrderStatus) {
+    /** Order was successfully completed */
     OrderStatus["Completed"] = "COMPLETED";
+    /** Order was unsuccessful */
     OrderStatus["Errored"] = "ERRORED";
+    /** New Order in progress */
     OrderStatus["Pending"] = "PENDING";
+    /**
+     * Order is currently rolling back
+     *
+     * All resources created as part of this Order are being deleted
+     */
     OrderStatus["RollingBack"] = "ROLLING_BACK";
+    /**
+     * Order has been superseded by another, more recent order
+     *
+     * This can happen if two update orders arrive in close succession and we already
+     * started to process the newer order first.
+     */
     OrderStatus["Superseded"] = "SUPERSEDED";
 })(OrderStatus || (OrderStatus = {}));
 /** Represents the different types of order */
 export var OrderType;
 (function (OrderType) {
+    /** Create a new Cloud Router */
     OrderType["CreateRouter"] = "CREATE_ROUTER";
+    /** Destroy an existing Cloud Router */
     OrderType["DestroyRouter"] = "DESTROY_ROUTER";
+    /** Update an existing Cloud Router */
     OrderType["UpdateRouter"] = "UPDATE_ROUTER";
 })(OrderType || (OrderType = {}));
 export var Ordering;
@@ -873,6 +1014,22 @@ export var OrganizationSsoProvider;
 (function (OrganizationSsoProvider) {
     OrganizationSsoProvider["Pingone"] = "PINGONE";
 })(OrganizationSsoProvider || (OrganizationSsoProvider = {}));
+/** The status of an association between a private subgraph and your Apollo account */
+export var PrivateSubgraphShareStatus;
+(function (PrivateSubgraphShareStatus) {
+    /** The private subgraph is connected to the Apollo service network */
+    PrivateSubgraphShareStatus["Connected"] = "CONNECTED";
+    /** The private subgraph is disconnected to the Apollo service network */
+    PrivateSubgraphShareStatus["Disconnected"] = "DISCONNECTED";
+    /** The private subgraph's connection to the Apollo service network has errored */
+    PrivateSubgraphShareStatus["Errored"] = "ERRORED";
+    /** The private subgraph's connection is pending */
+    PrivateSubgraphShareStatus["Pending"] = "PENDING";
+    /** The private subgraph's disconnection is pending */
+    PrivateSubgraphShareStatus["PendingDisconnection"] = "PENDING_DISCONNECTION";
+    /** The current state of the association is unknown */
+    PrivateSubgraphShareStatus["Unknown"] = "UNKNOWN";
+})(PrivateSubgraphShareStatus || (PrivateSubgraphShareStatus = {}));
 export var PromoteSchemaErrorCode;
 (function (PromoteSchemaErrorCode) {
     PromoteSchemaErrorCode["CannotPromoteSchemaForFederatedGraph"] = "CANNOT_PROMOTE_SCHEMA_FOR_FEDERATED_GRAPH";
@@ -882,11 +1039,55 @@ export var PromoteSchemaResponseCode;
     PromoteSchemaResponseCode["NoChangesDetected"] = "NO_CHANGES_DETECTED";
     PromoteSchemaResponseCode["PromotionSuccess"] = "PROMOTION_SUCCESS";
 })(PromoteSchemaResponseCode || (PromoteSchemaResponseCode = {}));
+export var ProposalActivityAction;
+(function (ProposalActivityAction) {
+    /** When the system changes a Proposal's status back to OPEN from APPROVED when approvals drop below min approvals. */
+    ProposalActivityAction["ApprovalWithdrawn"] = "APPROVAL_WITHDRAWN";
+    /** When a user manually sets a Proposal to Close */
+    ProposalActivityAction["CloseProposal"] = "CLOSE_PROPOSAL";
+    /** When a Comment is added to a Proposal. */
+    ProposalActivityAction["CommentAdded"] = "COMMENT_ADDED";
+    /** When a subgraph in a Proposal is deleted. */
+    ProposalActivityAction["DeleteSubgraph"] = "DELETE_SUBGRAPH";
+    /** When a diff in a Proposal publish is found to already be in the Implementation target variant that fully implements the Proposal. Status of the Proposal will change to IMPLEMENTED. */
+    ProposalActivityAction["FullyImplementedProposalOrigin"] = "FULLY_IMPLEMENTED_PROPOSAL_ORIGIN";
+    /**  When a diff in an Implementation variant publish is found in a Proposal that fully implements the Proposal. Status of the Proposal will change to IMPLEMENTED. */
+    ProposalActivityAction["FullyImplementedVariantOrigin"] = "FULLY_IMPLEMENTED_VARIANT_ORIGIN";
+    /** When the system changes a Proposal's status to APPROVED when the min approvals have been met. */
+    ProposalActivityAction["MetMinApprovalsProposal"] = "MET_MIN_APPROVALS_PROPOSAL";
+    /** When a user manually sets a Proposal to Open */
+    ProposalActivityAction["OpenProposal"] = "OPEN_PROPOSAL";
+    /** When a diff in a Proposal publish is found to already be in the Implementation target variant that partially implements the Proposal. Does not change the status of the Proposal, but isPartiallyImplemented will return true. */
+    ProposalActivityAction["PartiallyImplementedProposalOrigin"] = "PARTIALLY_IMPLEMENTED_PROPOSAL_ORIGIN";
+    /** When a diff in an Implementation variant publish is found in a Proposal that partially implements the Proposal. Does not change the status of the Proposal, but isPartiallyImplemented will return true. */
+    ProposalActivityAction["PartiallyImplementedVariantOrigin"] = "PARTIALLY_IMPLEMENTED_VARIANT_ORIGIN";
+    /** When a new revision is published to subgraphs in a Proposal. */
+    ProposalActivityAction["PublishSubgraphs"] = "PUBLISH_SUBGRAPHS";
+    /** When a Proposal is moved to DRAFT from another status not on creation. */
+    ProposalActivityAction["ReturnToDraftProposal"] = "RETURN_TO_DRAFT_PROPOSAL";
+    /** When a Review is added to a Proposal. */
+    ProposalActivityAction["ReviewAdded"] = "REVIEW_ADDED";
+})(ProposalActivityAction || (ProposalActivityAction = {}));
+export var ProposalChangeMismatchSeverity;
+(function (ProposalChangeMismatchSeverity) {
+    ProposalChangeMismatchSeverity["Error"] = "ERROR";
+    ProposalChangeMismatchSeverity["Off"] = "OFF";
+    ProposalChangeMismatchSeverity["Warn"] = "WARN";
+})(ProposalChangeMismatchSeverity || (ProposalChangeMismatchSeverity = {}));
+export var ProposalCoverage;
+(function (ProposalCoverage) {
+    ProposalCoverage["Full"] = "FULL";
+    ProposalCoverage["None"] = "NONE";
+    ProposalCoverage["Overridden"] = "OVERRIDDEN";
+    ProposalCoverage["Partial"] = "PARTIAL";
+    ProposalCoverage["Pending"] = "PENDING";
+})(ProposalCoverage || (ProposalCoverage = {}));
 export var ProposalStatus;
 (function (ProposalStatus) {
     ProposalStatus["Approved"] = "APPROVED";
     ProposalStatus["Closed"] = "CLOSED";
     ProposalStatus["Draft"] = "DRAFT";
+    ProposalStatus["Implemented"] = "IMPLEMENTED";
     ProposalStatus["Open"] = "OPEN";
 })(ProposalStatus || (ProposalStatus = {}));
 /** Columns of QueryStats. */
@@ -940,14 +1141,35 @@ export var QueryTriggerWindow;
 /** Responsibility for an errored order */
 export var ReasonCause;
 (function (ReasonCause) {
+    /**
+     * Could not complete an order due to internal reason
+     *
+     * This could be due to intermittent issues, bug in our code, etc.
+     */
     ReasonCause["Internal"] = "INTERNAL";
+    /**
+     * Could not complete an order due to invalid User input
+     *
+     * For example, the user provided an invalid router configuration or supergraph schema.
+     */
     ReasonCause["User"] = "USER";
 })(ReasonCause || (ReasonCause = {}));
 /** Possible state of a region */
 export var RegionState;
 (function (RegionState) {
+    /**
+     * Active region
+     *
+     * Can be used for Cloud Routers
+     */
     RegionState["Active"] = "ACTIVE";
+    /** Does not appear in the API */
     RegionState["Hidden"] = "HIDDEN";
+    /**
+     * Inactive region
+     *
+     * Cannot yet be used for Cloud Routers
+     */
     RegionState["Inactive"] = "INACTIVE";
 })(RegionState || (RegionState = {}));
 export var ReportSchemaErrorCode;
@@ -996,17 +1218,41 @@ export var ReviewDecision;
 })(ReviewDecision || (ReviewDecision = {}));
 export var RouterEntitlementAudience;
 (function (RouterEntitlementAudience) {
+    /** Routers in Apollo hosted cloud. */
     RouterEntitlementAudience["Cloud"] = "CLOUD";
+    /** Routers in offline environments with license files supplied from a URL or locally. */
+    RouterEntitlementAudience["Offline"] = "OFFLINE";
+    /** Routers in self-hosted environments fetching their license from uplink. */
     RouterEntitlementAudience["SelfHosted"] = "SELF_HOSTED";
 })(RouterEntitlementAudience || (RouterEntitlementAudience = {}));
 /** Current status of Cloud Routers */
 export var RouterStatus;
 (function (RouterStatus) {
+    /** Cloud Router is not yet provisioned */
     RouterStatus["Creating"] = "CREATING";
+    /** Router has been deleted */
     RouterStatus["Deleted"] = "DELETED";
+    /**
+     * Cloud Router is running, but currently being deleted
+     *
+     * This is the only mutation state that doesn't support rollback. If we fail to
+     * delete a Router, the workflows are configured to stop and keep the router into
+     * the Deleting status.
+     */
     RouterStatus["Deleting"] = "DELETING";
+    /**
+     * Current order is rolling back to the last known good state
+     *
+     * After a RollingBack state, a Router can move either into Running state (from a
+     * Update order) or Deleted (from a Create order).
+     *
+     * If we fail to roll back, the workflows are configured to stop and keep the router
+     * into the RollingBack status.
+     */
     RouterStatus["RollingBack"] = "ROLLING_BACK";
+    /** Current router is running and able to server requests */
     RouterStatus["Running"] = "RUNNING";
+    /** Cloud Router is running, but currently being updated */
     RouterStatus["Updating"] = "UPDATING";
 })(RouterStatus || (RouterStatus = {}));
 export var SchemaTagHistoryOrder;
@@ -1094,6 +1340,20 @@ export var ServiceFieldUsageColumn;
     ServiceFieldUsageColumn["SchemaTag"] = "SCHEMA_TAG";
     ServiceFieldUsageColumn["Timestamp"] = "TIMESTAMP";
 })(ServiceFieldUsageColumn || (ServiceFieldUsageColumn = {}));
+/** Columns of ServiceGraphosCloudMetrics. */
+export var ServiceGraphosCloudMetricsColumn;
+(function (ServiceGraphosCloudMetricsColumn) {
+    ServiceGraphosCloudMetricsColumn["AgentVersion"] = "AGENT_VERSION";
+    ServiceGraphosCloudMetricsColumn["ResponseSize"] = "RESPONSE_SIZE";
+    ServiceGraphosCloudMetricsColumn["ResponseSizeThrottled"] = "RESPONSE_SIZE_THROTTLED";
+    ServiceGraphosCloudMetricsColumn["RouterId"] = "ROUTER_ID";
+    ServiceGraphosCloudMetricsColumn["RouterOperations"] = "ROUTER_OPERATIONS";
+    ServiceGraphosCloudMetricsColumn["RouterOperationsThrottled"] = "ROUTER_OPERATIONS_THROTTLED";
+    ServiceGraphosCloudMetricsColumn["SchemaTag"] = "SCHEMA_TAG";
+    ServiceGraphosCloudMetricsColumn["SubgraphFetches"] = "SUBGRAPH_FETCHES";
+    ServiceGraphosCloudMetricsColumn["SubgraphFetchesThrottled"] = "SUBGRAPH_FETCHES_THROTTLED";
+    ServiceGraphosCloudMetricsColumn["Timestamp"] = "TIMESTAMP";
+})(ServiceGraphosCloudMetricsColumn || (ServiceGraphosCloudMetricsColumn = {}));
 /** Columns of ServiceOperationCheckStats. */
 export var ServiceOperationCheckStatsColumn;
 (function (ServiceOperationCheckStatsColumn) {
@@ -1166,13 +1426,24 @@ export var ServiceTraceRefsColumn;
     ServiceTraceRefsColumn["TraceCount"] = "TRACE_COUNT";
     ServiceTraceRefsColumn["TraceId"] = "TRACE_ID";
 })(ServiceTraceRefsColumn || (ServiceTraceRefsColumn = {}));
-/** Current status of [`Shard`]s */
+/** Current status of Cloud Shards */
 export var ShardStatus;
 (function (ShardStatus) {
+    /** The Shard is active and ready to accept new Cloud Routers */
     ShardStatus["Active"] = "ACTIVE";
+    /** The Shard no long exists */
     ShardStatus["Deleted"] = "DELETED";
+    /** The Shard is working as expected, but should not be used to provision new Cloud Routers */
     ShardStatus["Deprecated"] = "DEPRECATED";
+    /**
+     * The Shard is suffering from a temporary degradation that might impact provisioning new
+     * Cloud Routers
+     */
     ShardStatus["Impaired"] = "IMPAIRED";
+    /**
+     * The Shard is currently being updated and should temporarily not be used to provision new
+     * Cloud Routers
+     */
     ShardStatus["Updating"] = "UPDATING";
 })(ShardStatus || (ShardStatus = {}));
 export var SlackPublishState;
@@ -1192,8 +1463,21 @@ export var State;
 /** Possible status of a Cloud Router version */
 export var Status;
 (function (Status) {
+    /**
+     * Deprecated version of a Cloud Router
+     *
+     * New Cloud Routers should not use this version, and this will not be
+     * supported at some point in the future.
+     */
     Status["Deprecated"] = "DEPRECATED";
+    /**
+     * Upcoming or experimental version of a Cloud Router
+     *
+     * This should only be used internally, or to preview new features to
+     * customers.
+     */
     Status["Next"] = "NEXT";
+    /** Cloud Router Version is ready to be used by end users */
     Status["Stable"] = "STABLE";
 })(Status || (Status = {}));
 export var StoreSchemaErrorCode;
