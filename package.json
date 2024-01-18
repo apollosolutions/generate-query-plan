@@ -6,25 +6,25 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@apollo/gateway": "^2.5.0",
+    "@apollo/gateway": "^2.6.3",
     "clipanion": "^3.2.0-rc.13",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-request": "^4.3.0",
     "graphql-tag": "^2.12.6",
-    "make-fetch-happen": "^10.1.8"
+    "make-fetch-happen": "^10.2.1"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.13.12",
-    "@graphql-codegen/typescript": "^2.8.2",
-    "@graphql-codegen/typescript-graphql-request": "^4.5.8",
-    "@graphql-codegen/typescript-operations": "^2.5.7",
-    "eslint": "^8.27.0",
-    "typescript": "^4.9.3"
+    "@graphql-codegen/cli": "^2.16.1",
+    "@graphql-codegen/typescript": "^2.8.8",
+    "@graphql-codegen/typescript-graphql-request": "^4.5.9",
+    "@graphql-codegen/typescript-operations": "^2.5.13",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "gql": "yarn graphql-codegen && yarn tsc -p studio/tsconfig.json",
     "dev": "node bin/index.js",
     "dev:example": "yarn dev --supergraph example/supergraph.graphql --operation example/operation.graphql",
-    "dev:example:pretty": "yarn dev --supergraph example/supergraph.graphql --operation example/operation.graphql --pretty"
+    "dev:example:pretty": "yarn dev:example --pretty"
   }
 }
