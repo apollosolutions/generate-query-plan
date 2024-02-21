@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@apollo/gateway": "^2.6.3",
+    "@apollo/gateway": "^2.7.1",
     "clipanion": "^3.2.0-rc.13",
     "graphql": "^16.8.1",
     "graphql-request": "^4.3.0",
