@@ -20,6 +20,8 @@ export class DefaultCommand extends Command {
 
   sudo = Option.Boolean("--sudo");
 
+  complexity = Option.Boolean("--complexity");
+
   async execute() {
     if (this.supergraph && this.graphref) {
       this.context.stderr.write(
@@ -43,6 +45,11 @@ export class DefaultCommand extends Command {
 
     const queryPlan = await generateQueryPlan(result, operation);
 
+    if (this.complexity) {
+      const comx = calculateComplexity(queryPlan.node, 0);
+      console.log("complexity", comx);
+    }
+
     if (this.pretty) {
       this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
     } else {
@@ -51,6 +58,26 @@ export class DefaultCommand extends Command {
     }
   }
 }
+
+const calculateComplexity = (queryPlanNode, complexity) => {
+  switch (queryPlanNode.kind) {
+    case "QueryPlan":
+    case "Flatten":
+      complexity = calculateComplexity(queryPlanNode.node, complexity + 1);
+      break
+    case "Sequence":
+    case "Parallel":
+      queryPlanNode.nodes.forEach((node) => {
+        complexity = calculateComplexity(node, complexity + 1);
+      })
+      break;
+    case "Fetch":
+      complexity = complexity + 1;
+      break;
+  }
+
+  return complexity;
+};
 
 /**
  * @param {import("@apollo/federation-internals").Supergraph} supergraph
