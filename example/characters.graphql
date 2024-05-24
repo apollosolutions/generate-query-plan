@@ -1,0 +1,67 @@
+extend schema
+    @link(
+        url: "https://specs.apollo.dev/federation/v2.7",
+        import: ["@key", "@tag", "@shareable"]
+    )
+
+type Query {
+    character(id: ID!): Character
+    characters(page: Int, filter: FilterCharacter): Characters
+    charactersByIds(ids: [ID!]!): [Character]
+    location(id: ID!): Location
+    locations(page: Int, filter: FilterLocation): Locations
+    locationsByIds(ids: [ID!]!): [Location]
+}
+
+type Character @key(fields: "id") {
+    id: ID
+    name: String @tag(name: "pii")
+    status: String
+    species: String
+    type: String
+    gender: String
+    origin: Location
+    location: Location
+    image: String
+    created: String
+}
+
+type Characters {
+    info: Info
+    results: [Character]
+}
+
+input FilterCharacter {
+    name: String
+    status: String
+    species: String
+    type: String
+    gender: String
+}
+
+input FilterLocation {
+    name: String
+    type: String
+    dimension: String
+}
+
+type Info @shareable {
+    count: Int
+    pages: Int
+    next: Int
+    prev: Int
+}
+
+type Location @key(fields: "id") {
+    id: ID
+    name: String
+    type: String
+    dimension: String
+    residents: [Character]!
+    created: String
+}
+
+type Locations {
+    info: Info
+    results: [Location]
+}

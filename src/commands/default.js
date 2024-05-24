@@ -16,8 +16,6 @@ export class DefaultCommand extends Command {
 
   operation = Option.String("--operation", { required: true });
 
-  pretty = Option.Boolean("--pretty");
-
   sudo = Option.Boolean("--sudo");
 
   complexity = Option.Boolean("--complexity");
@@ -50,12 +48,7 @@ export class DefaultCommand extends Command {
       console.log("complexity", comx);
     }
 
-    if (this.pretty) {
-      this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
-    } else {
-      this.context.stdout.write(JSON.stringify(queryPlan, null, 2));
-      this.context.stdout.write("\n");
-    }
+    this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
   }
 }
 
@@ -73,6 +66,9 @@ const calculateComplexity = (queryPlanNode, complexity) => {
       break;
     case "Fetch":
       complexity = complexity + 1;
+      break;
+    default:
+      console.log("Unknown query plan node:", queryPlanNode.kind);
       break;
   }
 

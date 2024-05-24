@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@apollo/gateway": "^2.7.1",
+    "@apollo/gateway": "^2.7.7",
     "clipanion": "^3.2.0-rc.13",
     "graphql": "^16.8.1",
     "graphql-request": "^4.3.0",
@@ -24,7 +24,7 @@
   "scripts": {
     "gql": "npm run graphql-codegen && npm run tsc -p studio/tsconfig.json",
     "dev": "node bin/index.js",
-    "dev:example": "node bin/index.js --supergraph example/supergraph.graphql --operation example/operation.graphql --complexity",
-    "dev:example:pretty": "node bin/index.js --supergraph example/supergraph.graphql --operation example/operation.graphql --pretty"
+    "dev:example": "node bin/index.js --supergraph example/supergraph.graphql --operation example/operation.graphql > example-query-plan.txt",
+    "dev:example-complexity": "node bin/index.js --supergraph example/supergraph.graphql --operation example/operation.graphql --complexity"
   }
 }
