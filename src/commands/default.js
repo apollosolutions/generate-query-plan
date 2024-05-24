@@ -20,6 +20,8 @@ export class DefaultCommand extends Command {
 
   sudo = Option.Boolean("--sudo");
 
+  skipLog = Option.Boolean("--skipLog");
+
   async execute() {
     if (this.supergraph && this.graphref) {
       this.context.stderr.write(
@@ -43,6 +45,10 @@ export class DefaultCommand extends Command {
 
     const queryPlan = await generateQueryPlan(result, operation);
 
+    if (this.skipLog) {
+      return;
+    }
+
     if (this.pretty) {
       this.context.stdout.write(prettyFormatQueryPlan(queryPlan));
     } else {
@@ -63,7 +69,10 @@ export async function generateQueryPlan(supergraph, operationDoc, operationName)
     operationName,
   });
   const queryPlanner = new QueryPlanner(supergraph);
-  return queryPlanner.buildQueryPlan(operation);
+  console.time('Query Plan');
+  const plan =  queryPlanner.buildQueryPlan(operation);
+  console.timeEnd('Query Plan');
+  return plan;
 }
 
 /**
