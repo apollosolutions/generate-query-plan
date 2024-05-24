@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@apollo/gateway": "^2.7.1",
+    "@apollo/gateway": "^2.7.8",
     "clipanion": "^3.2.0-rc.13",
     "graphql": "^16.8.1",
     "graphql-request": "^4.3.0",
@@ -25,6 +25,7 @@
     "gql": "yarn graphql-codegen && yarn tsc -p studio/tsconfig.json",
     "dev": "node bin/index.js",
     "dev:example": "yarn dev --supergraph example/supergraph.graphql --operation example/operation.graphql",
-    "dev:example:pretty": "yarn dev:example --pretty"
+    "dev:example:pretty": "yarn dev:example --pretty",
+    "dev:example:perf": "yarn dev --supergraph example/supergraph.graphql --operation example/operation.graphql --skipLog"
   }
 }
