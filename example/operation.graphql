@@ -1,10 +1,12 @@
-query ExampleQuery($characterId: ID!) {
+query ExampleQuery($characterId: ID!, $includeName: Boolean = true) {
   character(id: $characterId) {
     id
-    name
-    episode {
-      id
-      name
+    name @include(if: $includeName)
+    ... @defer {
+      episode {
+        id
+        name
+      }
     }
   }
 }

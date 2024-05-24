@@ -1,0 +1,10 @@
+federation_version: =2.7.1
+subgraphs:
+  characters:
+    routing_url: https://characters.example.com
+    schema:
+      file: ./characters.graphql
+  episodes:
+    routing_url: https://episodes.example.com
+    schema:
+      file: ./episodes.graphql
